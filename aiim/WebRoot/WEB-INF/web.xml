@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" 
+	xmlns="http://java.sun.com/xml/ns/j2ee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+  <!-- <context-param> 
+		<param-name>webAppRootKey</param-name> 
+		<param-value>log4j.rootLogger</param-value> 
+	</context-param> 
+	<context-param> 
+		<param-name>log4jConfigLocation</param-name> 
+		<param-value>classpath:log4j.properties</param-value> 
+	</context-param> 
+	<context-param> 
+		<param-name>log4jRefreshInterval</param-name> 
+		<param-value>3000</param-value> 
+	</context-param> 
+	<listener> 
+		<listener-class> 
+			org.springframework.web.util.Log4jConfigListener 
+		</listener-class> 
+	</listener> -->
+
+	<!--  配置spring监听器 -->
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+ 
+	<!-- 配置spring配置文件 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/applicationContext*.xml,/WEB-INF/SpringBeans*.xml</param-value>
+	</context-param>
+	
+	<!-- 判断用户是否登陆过滤器 -->
+    <filter>
+	   <filter-name>UserLoginFilter</filter-name>
+	   <filter-class>com.orifound.aiim.web.util.UserLoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	    <filter-name>UserLoginFilter</filter-name>
+        <url-pattern>*.action</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+	    <filter-name>UserLoginFilter</filter-name>
+        <url-pattern>/aiim/YJJSGL/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+	    <filter-name>UserLoginFilter</filter-name>
+        <url-pattern>/aiim/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- 字符集过滤器 -->
+    <filter>
+       <filter-name>EncodingFilter</filter-name>
+       <filter-class>com.orifound.aiim.web.util.EncodingFilter</filter-class>
+       <init-param>
+          <param-name>encoding</param-name>
+          <param-value>UTF-8</param-value>
+       </init-param>
+     </filter>
+     <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <url-pattern>*.action</url-pattern>
+     </filter-mapping>
+	<!-- 配置spring session过滤器 -->
+	<!--  <filter>
+		<filter-name>lazyLoadingFilter</filter-name>
+		<filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>lazyLoadingFilter</filter-name>
+		<url-pattern>*.action</url-pattern>
+	</filter-mapping>
+  -->
+    
+    
+    <!-- 初始化系统 -->
+	<servlet>
+	    <servlet-name>initialServlet</servlet-name>
+	    <servlet-class>com.orifound.aiim.web.util.DelegatingServletProxy</servlet-class>
+	    <load-on-startup>2</load-on-startup>
+   </servlet>
+   <servlet-mapping>
+	    <servlet-name>initialServlet</servlet-name>
+	    <url-pattern>/InitialServlet</url-pattern>
+   </servlet-mapping>
+	
+	
+	<!-- 配置struts Action过滤器 -->
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>
+			org.apache.struts2.dispatcher.FilterDispatcher
+		</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- 柱状图显示Servlet  -->
+	<servlet>
+		<servlet-name>DisplayChart</servlet-name>
+		<servlet-class>org.jfree.chart.servlet.DisplayChart</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DisplayChart</servlet-name>
+		<url-pattern>/servlet/DisplayChart</url-pattern>
+	</servlet-mapping>
+	
+	<!-- DWR单独配置 -->
+	<listener>
+	 <listener-class>org.directwebremoting.servlet.DwrListener</listener-class>
+	</listener>
+	<servlet>
+	  <servlet-name>dwr-invoker</servlet-name>
+	  <servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
+	  <init-param>
+	    <param-name>debug</param-name>
+	    <param-value>true</param-value>
+	  </init-param>
+	  <init-param>
+        <param-name>crossDomainSessionSecurity</param-name>
+        <param-value>false</param-value>
+      </init-param>
+      <init-param>
+        <param-name>allowScriptTagRemoting</param-name>
+        <param-value>true</param-value>
+      </init-param>
+	  <load-on-startup>1</load-on-startup>
+	</servlet>
+  <servlet>
+    <description>数字证书下载</description>
+    <display-name>JKS Download Servlet</display-name>
+    <servlet-name>JKSDownloadServlet</servlet-name>
+    <servlet-class>com.orifound.aiim.web.util.JKSDownloadServlet</servlet-class>
+  </servlet>
+
+	<servlet-mapping>
+	  <servlet-name>dwr-invoker</servlet-name>
+	  <url-pattern>/dwr/*</url-pattern>
+	</servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>JKSDownloadServlet</servlet-name>
+    <url-pattern>/servlet/JKSDownloadServlet</url-pattern>
+  </servlet-mapping>
+
+
+    <!-- 自定义标签 -->
+     <!--  <taglib>
+           看到标签库唯一标识符时
+         <taglib-uri>/myTag</taglib-uri>
+         使用标签库描述文件的本地副本
+         <taglib-location>/WEB-INF/myTag.tld</taglib-location>
+     </taglib> -->
+
+     <!-- 默认页面 -->
+    <welcome-file-list>
+      <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>

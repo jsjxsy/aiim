@@ -1,0 +1,4 @@
+#Wed Aug 18 18:35:40 CST 2010
+eclipse.preferences.version=1
+validator.Checked=WebRoot/XTGL/userRolesManage.jsp,src/struts.xml
+validator.Unchecked=

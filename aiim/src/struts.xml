@@ -1,0 +1,1045 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">  
+<struts>
+	<!--下述语句是将struts2交给spring管理 -->	
+   <!-- <constant name="struts.objectFactory" value="spring"/>-->	
+
+    <!-- 设置字符集 -->
+	<!-- <constant name="struts.i18n.encoding" value="UTF-8" />-->
+	
+	<!--导入struts-default.xml文件 -->	
+	<include file="struts-default.xml"></include>
+	
+	<package name="interceptor" extends="struts-default">
+	   <interceptors>
+            <!-- 定义权限控制拦截器 -->
+            <interceptor name="auth" class="com.orifound.aiim.web.interceptors.AuthInterceptor"/>
+            <!-- 定义一个包含权限控制的拦截器栈 -->
+			<interceptor-stack name="authdefault">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<interceptor-ref name="auth"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="authdefault"></default-interceptor-ref> 
+	</package>
+	
+	<!-- user -->
+	<package name="login" extends="struts-default" namespace="/login">
+		<action name="userLoginAction_*" class="userLoginAction" method="{1}">
+			<result type="redirect">/main.jsp</result>
+			<result name="toLogin">/login.jsp</result>
+			<result name="out" type="redirect">/login.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		
+		<!-- 动态生成验证码 -->
+		<action name="getAuthcode" class="getAuthcode">
+	        <result type="stream">
+	            <param name="contentType">image/jpeg</param>
+	            <param name="inputName">inputStream</param>
+	        </result>
+	    </action>
+	</package>
+	
+
+	<!-- 移交管理 -->
+	<package name="YJGL" extends="struts-default" namespace="/YJGL">
+	     <action name="YJJSAction_*" class="YJJSAction" method="{1}">
+		      <result>${resultURL}</result>
+		 </action>
+		  
+	      <!-- 登记成功后点继续登记是所用的Action -->
+		  <action name="JSDJRefreshAction">
+		    <result>/YJJSGL/dlg_JSDJ.jsp</result>
+		  </action>
+	</package>
+	
+	<!-- 综合查询 -->
+	<package name="ZHCX" extends="struts-default" namespace="/ZHCX">
+	     <global-results>
+	        <result name="error">/error.jsp</result>
+	     </global-results>
+	   <!-- 分类查询Action -->
+		  <action name="integratedQueryAction_*" class="integratedQueryAction" method="{1}">
+		     <!-- 用于左边显示分类树 -->
+		     <result>/left.jsp</result>
+		     
+		      <!-- 分类查询页面 -->
+		     <result name="toItem">/ZHCX/item.jsp</result>
+		     
+		     <!-- 分类查询页面 -->
+		     <result name="toFLCX">/ZHCX/FLCX.jsp</result>
+		     
+		     <!-- 带复选框的树档案分类树 --> 
+		     <result name="checkBox_Tree">/ZHCX/left_checkbox.jsp</result>
+		     
+		     <!-- 跨门类查询-->
+		     <result name="toKMLCX">/ZHCX/KMLCX.jsp</result>
+		     
+		     <!-- 高级查询对话框 -->
+		     <result name="toAdvance">/ZHCX/dlg_AdvanceFind.jsp</result>
+		     
+		     <!-- 简单查询对话框 -->
+		     <result name="toSimple">/ZHCX/dlg_SimpleFind.jsp</result>
+		     
+		     <!-- 查看跨门类查询结果集的详细列表信息 -->
+		     <result name="toListDetail">/ZHCX/listDetail.jsp</result>
+		     
+		      <!-- 用户自定义条件查询树 -->
+		     <result name="toDefinedQuery">/ZHCX/definedQueryLeft.jsp</result>
+		     
+		      <!-- 用户自定义条件查询:用于新增自定义条件的档案分类树 -->
+		     <result name="toDlg_DefinedQuery">/ZHCX/dlg_DefinedQuery.jsp</result>
+		     
+		      <!-- 用户自定义条件查询:用于新增自定义条件的档案分类树 -->
+		     <result name="toDefinedQueryResult">/ZHCX/publicItemForDefineQuery.jsp</result>
+		     
+		      <!-- 用户自定义条件查询：新增成功页面 -->
+		     <result name="toAddSuccess">/ZHCX/addSuccess.jsp</result>		     
+		     
+		     <!-- 关键字检索 -->
+		     <result name="toKeyWordQuery">/ZHCX/keyWordQuery.jsp</result>
+		     
+		       <!-- 用户自定义条件查询：显示档案列表 -->
+		    <result name="toUserDefinedQuery">/ZHCX/userDefineQuery.jsp</result>
+		  </action>
+	</package>	
+
+    <!-- 档案利用Action -->
+    <package name="DALY" extends="struts-default" namespace="/DALY">
+   		 <global-results>
+	        <result name="error">/error.jsp</result>
+	        <result name="toPrintStoreroomLocation">/KFGL/printStoreroomLocation.jsp</result>
+	     </global-results>
+         <action name="archivesUseAction_*" class="archivesUseAction" method="{1}">
+		    <result>/left.jsp</result>
+		    <result name="toJDList">/DALY/JDDJ.jsp</result>
+		    <result name="toCDList">/DALY/CDDJ.jsp</result>
+		    <result name="toJDDJ">/DALY/dlgBorrow_JD.jsp</result>
+		    <result name="toCDDJ">/DALY/dlgBorrow_CD.jsp</result>
+		    
+		    <!-- 审核单条档案申请的页面 -->
+		    <result name="toCheckApplicationItem">/DALY/checkApplicationItem.jsp</result>
+		    
+		    
+		    <!-- 登记在线申请中的用户信息 -->
+		    <result name="registUserInfoForOnlineApply">/DALY/registUserInfoForOnlineApply.jsp</result>
+		    
+		    <!-- 查阅申请 -->
+		    <result name="toShowUseList">/DALY/showArchivesUseList.jsp</result>
+		    <!-- 查看登记信息 -->
+		    <result name="toDJView">/DALY/dlgBorrow_DJView.jsp</result>
+		    <!-- 续借登记 -->
+		    <result name="toXJDJ">/DALY/XJDJ.jsp</result>
+		    <!-- 申请审批 -->
+		    <result name="toApplicationExamine">/DALY/applicationExamine.jsp</result>
+		    <!-- 查询在线利用申请 -->
+		    <result name="toQueryOnline">/DALY/queryOnlineApplication.jsp</result>
+		    <!-- 查看在线申请单详细信息 -->
+		    <result name="toOnlineRequestDetailList">/DALY/showRequestDetailList.jsp</result>
+		    
+		    
+		    <result name="toOutDateDJView">/DALY/dlgBorrow_OutDateDJView.jsp</result>
+		    <result name="toRegist">/ZHCX/dlg_UseRegist.jsp</result>
+		    <result name="toUseList">/DALY/dlg_UseList.jsp</result>
+		    <result name="toLYCX">/DALY/LYCX.jsp</result>
+		    <result name="toGQCH">/DALY/GQCH.jsp</result>
+		    <result name="toDQYJ">/DALY/DQYJ.jsp</result>
+		    <result name="toXJ">/DALY/XJDJ.jsp</result>
+		    <result name="toGH">/DALY/GHDJ.jsp</result>
+		    <result name="toZXSQD">/DALY/ZXSQD.jsp</result>
+		    <result name="toFindDJInfo" type="chain">archivesUseAction_findUseList</result>
+		    
+		    <result name="czdj">${resultURL}</result>
+		  </action>
+		  <!-- forwardAction -->
+		  
+		  <action name="JDDJ">
+		    <result>/DaLY/JDDJ.jsp</result>
+		  </action>
+		  <!-- 戴 -->
+		  <action name="findArchivesUseRequestDetails" class="archivesUseAction" method="findArchivesUseRequestDetails">
+			<result name="success">/DALY/applicationExamine.jsp</result>
+		  	<result name="error">/error.jsp</result>
+		  </action>
+		  <action name="findArchivesUseRequestDetailsByName" class="archivesUseAction" method="findArchivesUseRequestDetailsByName">
+			<result name="success">/DALY/queryOnlineApplication.jsp</result>
+		  	<result name="error">/error.jsp</result>
+		  </action>
+		  <action name="unregisterArchivesUses" class="archivesUseAction" method="unregisterArchivesUses">
+			<result name="success">/DALY/queryOnlineApplication.jsp</result>
+		  	<result name="error">/error.jsp</result>
+		  </action>
+		  
+		  <!--	档案出证文件上传	-->
+		<action name="uploadCertificateFile" class="archivesCertificateManageAction" method="uploadFile">
+			<interceptor-ref name="fileUpload">
+				<!-- 配置允许上传的文件类型，多个用","分隔 -->
+					<param name="allowedTypes">
+<!--		image/bmp,image/png,image/gif,image/jpeg,image/jpg,image/x-png,image/pjpeg -->
+					</param>
+				<!-- 配置允许上传的文件大小，单位字节 -->
+				<param name="maximumSize">102400</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</action>   
+		  
+		  <!-- 档案出证文件下载 -->
+	  	<action name="downloadCertificateFile" class="archivesCertificateManageAction" method="downloadFile">
+		 	<result type="stream">
+               <param name="contentType">${downloadContentType}</param>
+               <param name="inputName">inputStream</param>                
+               <param name="bufferSize">4096</param>
+               <param name="contentDisposition">attachment;filename="${downloadFileName}"</param>
+            </result>	
+		</action>
+		
+		   <!-- 档案利用->出证管理 -->
+		  	<action name="archivesCertificateManageAction_*" class="archivesCertificateManageAction" method="{1}">
+	 			<result name="success">${resultURL}</result>
+	 		</action>
+    </package>
+    
+    
+    <!-- 公文管理 -->
+	<package name="GWGL" extends="struts-default" namespace="/GWGL">
+	
+		<!--	文件上传管理	-->
+		<action name="fileUpload" class="officialTemplateAction" method="uploadFile">
+			<interceptor-ref name="fileUpload">
+				<!-- 配置允许上传的文件类型，多个用","分隔 -->
+				
+					<param name="allowedTypes">
+<!--		image/bmp,image/png,image/gif,image/jpeg,image/jpg,image/x-png,image/pjpeg -->
+					</param>
+				
+				<!-- 配置允许上传的文件大小，单位字节 -->
+				<param name="maximumSize">102400</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+			<!-- 动态设置Action中的savePath属性的值 -->
+			<param name="savePath">/upload</param>
+		</action>   
+		<!--	文件下载	-->
+		<action name="downloadFile" class="officialTemplateAction"
+			method="downLoadFile">
+			<result type="stream">
+				<param name="contentType">${downloadContentType}</param>
+				<param name="inputName">inputStream</param>
+				<param name="bufferSize">4096</param>
+				<param name="contentDisposition">attachment;filename="${downloadFileName}"</param>
+			</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		
+			<!--  公文模板管理	-->
+		  <action name="officialTemplateAction_*" class="officialTemplateAction" method="{1}">
+		     <result>/left.jsp</result>
+		     <result name="ownLeft">/GWGL/left.jsp</result>
+		     <result name="toTemplates">/GWGL/templateManage.jsp</result>
+		     <result name="addTemplate">/GWGL/addTemplate.jsp</result>
+		     <result name="toFindTemplates" type="chain">officialTemplateAction_findAllOfficialTemplate</result>
+		     <result name="error">/error.jsp</result>
+		  </action>
+		  
+		<!--  保存档案信息 -->
+		<action name="saveOfficialArchivesInfo" class="officialArchivesInfoManageAction" method="saveOfficialArchivesInfo">		
+			<result name="success">/GWGL/dispatchDocItem.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>	
+		<!-- 删除档案信息 -->
+		<action name="deleteOfficialArchivesInfo" class="officialArchivesInfoManageAction" method="deleteOfficialArchivesInfo" >
+			<result name="success">/success.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		<!-- 批量删除档案信息 -->
+		<action name="deleteOfficialArchivesInfos" class="officialArchivesInfoManageAction" method="deleteOfficialArchivesInfos" >
+			<result name="success">/GWGL/officialArchivesRegManage.jsp?officialArchivesTypeID=${officialArchivesTypeID}</result>
+			<result name="filesSuccess">/GWGL/officialArachivesFileManage.jsp?officialArchivesTypeID=${officialArchivesTypeID}</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		<!--  通过条件查询翻页  -->
+		<action name="findOfficialArchivesInfosByCondition" class="officialArchivesInfoManageAction" method="findOfficialArchivesInfosByCondition" >
+			<result name="toDJ">/GWGL/officialArchivesRegManage.jsp?officialArchivesTypeID=${officialArchivesTypeID}</result>	
+			<result name="toGD">/GWGL/officialArachivesFileManage.jsp?officialArchivesTypeID=${officialArchivesTypeID}</result>				
+			<result name="error">/error.jsp</result>
+		</action>
+		<!-- 打开归档界面	-->
+		<action name="archivingOfficialArchivesInfos" class="officialArchivesInfoManageAction" method="archivingOfficialArchivesInfos">
+			<result name="success">/GWGL/archiving.jsp</result>
+		  	<result name="error">/error.jsp</result>
+		</action>
+		
+		<!-- 进行批量归档	-->
+		<action name="archivingBatchOfficialArchivesInfos" class="officialArchivesInfoManageAction" method="archivingBatchOfficialArchivesInfos">
+			<result name="success">/GWGL/archivings.jsp</result>
+		  	<result name="error">/error.jsp</result>
+		</action>
+		
+		<!-- 公文登记树和公文归档树  -->
+		<action name="getOfficialArchivesTypeTree" class="officialArchivesInfoManageAction" method="getOfficialArchivesTypeTree">
+			<result name="success">/GWGL/left.jsp</result>
+		  	<result name="error">/error.jsp</result>
+		</action>
+		<!-- 文档中心树  -->
+		<action name="getArchivesTypeTree_ZX" class="officialArchivesInfoManageAction" method="getDocCenterTypeTree">
+			<result name="success">/GWGL/left.jsp</result>
+		  	<result name="error">/error.jsp</result>
+		</action>
+		<!-- 	公文档案管理	-->
+		<action name="officialArchivesInfoManageAction_*" class="officialArchivesInfoManageAction" method="{1}">
+		    <result>${reslutStr}</result>
+		</action>
+		<!--  档案中心 电子公文管理	-->
+		<action name="officeDocAction_*" class="officeDocAction" method="{1}">
+			<result name="success">/GWGL/docOfficialArachives.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		<!-- 打印	-->
+ 	 <action name="printPage" class="officialArchivesInfoManageAction" method="printPage">
+	 	<result name="success">/GWGL/dayin.jsp</result>
+	 	<result name="error">/error.jsp</result>
+	 </action>
+	<action name="print" class="officialArchivesInfoManageAction" method="print">
+	 	<result name="success">/GWGL/printing.jsp</result>
+	 	<result name="error">/error.jsp</result>
+	 </action>
+	 
+			<!--		 公文原文管理 -->
+		<action name="officialArchivesAttachedFileManageAction_*" class="officialArchivesAttachedFileManageAction" method="{1}">
+			 <result>${resultURL}</result>
+		</action>
+	</package>
+    
+    <!-- 管理与维护包 -->
+	 <package name="glywh" extends="struts-default" namespace="/GLYWH">
+	 	<!-- 查询所有用户信息 -->
+		<action name="findAllUsers" class="UserInfoManageAction" method="findAllUsers">
+			<result name="success">/GLYWH/userManage.jsp</result>
+		  	<result name="error">/error.jsp</result>
+		</action>
+		 <!-- 通过姓名查询用户信息 -->
+		<action name="findUserByRealName" class="UserInfoManageAction" method="findUserByRealName">
+			<result name="success">/GLYWH/userManage.jsp</result>
+		  	<result name="error">/error.jsp</result>
+		</action>
+		 <!-- 通过ID查找用户信息 -->
+		<action name="findUserInfoByUserID" class="UserInfoManageAction" method="findUserInfoByUserID">
+			<result name="success">/GLYWH/userItem.jsp</result>
+		  	<result name="error">/error.jsp</result>
+		</action>
+		 <!-- 保存用户信息 -->
+	 	<action name="saveUserInfo" class="UserInfoManageAction" method="saveUserInfo">
+			<result name="success">/GLYWH/userItem.jsp</result>
+		  	<result name="error">/error.jsp</result>
+		</action>
+		 <!-- 删除用户信息 -->
+		<action name="deleteUserInfos" class="UserInfoManageAction" method="deleteUserInfos">
+			<result name="success">/GLYWH/userManage.jsp</result>
+		  	<result name="error">/error.jsp</result>
+		</action>
+		 <!-- 更新用户信息 -->
+		<action name="updateUserInfo" class="UserInfoManageAction" method="updateUserInfo">
+			<result name="success">/GLYWH/userItem.jsp</result>
+		  	<result name="error">/error.jsp</result>
+		</action>
+		 <!-- 查询所有部门信息 -->
+		<action name="findAllDepartmentInfos" class="DepartmentManageAction" method="findAllDepartmentInfos">
+			<result name="success">/GLYWH/departmentManage.jsp</result>
+		  	<result name="error">/error.jsp</result>
+		</action>
+		 <!-- 通过ID查找部门信息 -->
+		<action name="findDepartmentInfoByID" class="DepartmentManageAction" method="findDepartmentInfoByID">
+			<result name="success">/GLYWH/departmentItem.jsp</result>
+		  	<result name="error">/error.jsp</result>
+		</action>
+		 <!-- 更新部门信息 -->
+		<action name="updateDepartmentInfo" class="DepartmentManageAction" method="updateDepartmentInfo">
+			<result name="success">/GLYWH/departmentItem.jsp</result>
+		  	<result name="error">/error.jsp</result>
+		</action>
+		 <!-- 保存部门信息 -->
+		<action name="saveDepartmentInfo" class="DepartmentManageAction" method="saveDepartmentInfo">
+			<result name="success">/GLYWH/departmentItem.jsp</result>
+		  	<result name="error">/error.jsp</result>
+		</action>
+		 <!-- 删除部门信息 -->
+		<action name="deleteDepartmentInfos" class="DepartmentManageAction" method="deleteDepartmentInfos">
+			<result name="success">/GLYWH/departmentManage.jsp</result>
+		  	<result name="error">/error.jsp</result>
+		</action>
+	 </package>
+    
+    
+    <!-- 库房管理包 -->
+	 <package name="KFGL" extends="struts-default" namespace="/KFGL">
+	 
+	 	<global-results>
+			<result name="error">/error.jsp</result>
+			<result name="toPrintStoreroomLocation">/KFGL/printStoreroomLocation.jsp</result>
+		</global-results>
+	
+		
+	 	<!--test 位置与状态查询 -->
+		<action name="fileUploadTest_*" class="fileUploadTest" method="{1}">
+			<result name="success">/testFile.jsp</result>
+		  	<result name="error">/error.jsp</result>
+		</action>
+		
+		<!-- 库房管理 -->	 	
+		<action name="storeroomManageAction_*" class="storeroomManageAction" method="{1}">
+		
+			<!-- 查看装盒不匹配档案情况的盘点报告 -->
+		    <result name="toStockReportArchivesBoxNotMatch">/KFGL/stockReport_ArchivesBoxNotMatch.jsp</result>
+			<!-- 查看上架位置不匹配的盘点报告 -->
+		    <result name="toStockReportAddressNotMatch">/KFGL/stockReport_AddressNotMatch.jsp</result>
+			<!-- 查看实物档案不在架的盘点报告 -->
+		    <result name="toStockReportPaperNotExist">/KFGL/stockReport_PaperNotExist.jsp</result>
+			<!-- 查看系统不在架的盘点报告 -->
+		    <result name="toStockReportSystemNotExist">/KFGL/stockReport_SystemNotExist.jsp</result>
+			<!-- 查看档案数量的盘点报告 -->
+		    <result name="toStockReportArchivesCount">/KFGL/stockReport_ArchivesCount.jsp</result>
+			<!-- 查看盘点报告 -->
+		    <result name="toViewStocktakingReports">/KFGL/viewStocktakingReports.jsp</result>
+			<!-- 执行库房盘点 -->
+		    <result name="toStocktaking">/KFGL/stocktaking.jsp</result>
+			<!-- 添加库房盘点工作信息 -->
+		    <result name="toAddStocktaking">/KFGL/addStocktaking.jsp</result>
+			<!-- 库房盘点工作信息 -->
+		    <result name="toStocktakingInfoManage">/KFGL/stocktakingInfoManage.jsp</result>
+			<!-- 库房环境管理 -->
+		    <result name="toEnvironment">/KFGL/environmentManage.jsp</result>
+			<!-- 新增环境登记 -->
+		    <result name="toAddKFHJ">/KFGL/KF_HJ_Add.jsp</result>	
+		    <!-- 修改环境登记 -->
+		    <result name="toAlterKFHJ">/KFGL/KF_HJ_alter.jsp</result>	
+		    
+			<!-- 位置与状态查询 -->
+		    <result name="toVeiwSubStructure">/KFGL/veiwSubStructure.jsp</result>	
+		    <!-- 位置与状态查询 -->
+		    <result name="toQueryLocAndStatus">/KFGL/queryLocAndStatus.jsp</result>		
+		    <!-- 位置登记 -->    
+		    <result name="toLocationRegister">/KFGL/locationRegister.jsp</result>
+		    <!-- 批量定义库房结构信息 -->
+		    <result name="toMassDefinition">/KFGL/massDefinition.jsp</result>
+		    <!-- 查询所有库房信息 -->
+		    <result name="toStoreroomStructure">/KFGL/storeroomStructure.jsp</result>
+		    <!-- 查询指定库房所有列信息 -->
+		    <result name="toColumnView">/KFGL/columnView.jsp</result>
+		    <!-- 查询库房结构信息 -->
+		    <result name="toStoreroomStructureDefinition">/KFGL/storeroomStructureDefinition.jsp</result>		    
+		</action>
+	 </package>
+    
+    <!-- 档案管理 -->
+    <package name="dagl" extends="struts-default" namespace="/DAGL">
+    <!-- 保存档案信息 -->
+		<action name="saveArchivesInfo" class="archivesInfoManageAction" method="saveArchivesInfo">		
+			<result name="success">/DAGL/item.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>	
+		<!-- 删除档案信息 -->
+		<action name="deleteArchivesInfo" class="archivesInfoManageAction" method="deleteArchivesInfo" >
+			<result name="success">/success.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		<!-- 批量删除档案信息 -->
+		<action name="deleteArchivesInfos" class="archivesInfoManageAction" method="deleteArchivesInfos" >
+			<result name="success">/DAGL/fileManage.jsp?archivesTypeID=${archivesTypeID}</result>
+			<result name="filesSuccess">/DAGL/filesManage.jsp?archivesTypeID=${archivesTypeID}</result>
+			<result name="juanNeiSuccess">/DAGL/filesManage.jsp?archivesTypeID=${archivesTypeID}</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		<!-- 批量提交送审档案信息 -->
+		<action name="submitToInputCheck" class="archivesInfoManageAction" method="submitToInputCheck" >
+			<result name="success">/DAGL/fileManage.jsp?archivesTypeID=${archivesTypeID}</result>
+			<result name="filesSuccess">/DAGL/filesManage.jsp?archivesTypeID=${archivesTypeID}</result>
+			<result name="juanNeiSuccess">/DAGL/filesManage.jsp?archivesTypeID=${archivesTypeID}</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		<!-- 组卷
+		<action name="combineArchivesInfos" class="archivesInfoManageAction" method="combineArchivesInfos" >
+			<result name="success">/DAGL/filesManage.jsp?nodeId=${archivesTypeID}</result>				
+			<result name="error">/error.jsp</result>
+		</action>
+		 -->
+		 <!-- 拆卷 -->
+		<action name="brokeArchivesInfo" class="archivesInfoManageAction" method="brokeArchivesInfo" >
+			<result name="success">/DAGL/filesManage.jsp?archivesTypeID=${archivesTypeID}</result>				
+			<result name="error">/error.jsp</result>
+		</action>
+		<!-- 通过条件查询翻页  -->
+		<action name="findArchivesInfosByCondition" class="archivesInfoManageAction" method="findArchivesInfosByCondition" >
+			<result name="toFile">/DAGL/fileManage.jsp?archivesTypeID=${archivesTypeID}</result>	
+			<result name="toFiles">/DAGL/filesManage.jsp?archivesTypeID=${archivesTypeID}</result>				
+			<result name="error">/error.jsp</result>
+		</action>		
+		<!-- 文件树  -->
+		<action name="getArchivesTypeTree" class="archivesInfoManageAction" method="getArchivesTypeTree">
+			<result name="success">/DAGL/left.jsp</result>
+		  	<result name="error">/error.jsp</result>
+		</action>
+		<!-- 案卷树  -->
+		<action name="getArchivesTypeTree_AJ" class="archivesInfoManageAction" method="getArchivesTypeTree_AJ">
+			<result name="success">/DAGL/left.jsp</result>
+		  	<result name="error">/error.jsp</result>
+		</action>
+		<action name="archivesInfoManageAction_*" class="archivesInfoManageAction" method="{1}">
+		    <result>${reslutStr}</result>
+		</action>
+	</package>
+	 
+	 <!-- 人事档案管理 -->
+	 <package name="studentFileManage" extends="struts-default" namespace="/XSDAGL">
+	    <!-- 学生档案管理Action -->
+	    <action name="studentFileManageAction_*" class="studentFileManageAction" method="{1}">
+	       <result>${resultURL}</result>
+	    </action>
+	    <!-- 学生登记 -->
+	    <action name="importStudentInfo" class="studentFileManageAction" method="importStudentInfo">
+	         <interceptor-ref name="fileUpload">
+	         <!-- 配置允许上传的文件类型，多个用","分隔 -->   
+             <!--  <param name="allowedTypes">   
+    　　　　　　                   application/vnd.ms-excel
+                   </param>   --> 
+              <!-- 配置允许上传的文件大小，单位字节 -->   
+              <!--  <param name="maximumSize">10239999</param> -->
+           </interceptor-ref>   
+           <interceptor-ref name="defaultStack" /> 
+	       <result>${resultURL}</result>
+	    </action>
+	    <!-- 转出登记 -->
+	    <action name="moveOutRegister" class="studentFileManageAction" method="moveOutRegister">
+	         <interceptor-ref name="fileUpload">
+	         <!-- 配置允许上传的文件类型，多个用","分隔 -->   
+             <!--  <param name="allowedTypes">   
+    　　　　　　                   application/vnd.ms-excel
+                   </param>   --> 
+              <!-- 配置允许上传的文件大小，单位字节 -->   
+              <!--  <param name="maximumSize">10239999</param> -->
+           </interceptor-ref>   
+           <interceptor-ref name="defaultStack" /> 
+	       <result>${resultURL}</result>
+	    </action>
+	 </package>
+	 
+	 <!-- 教职工档案管理Action -->
+	 <package name="teacherFileManage" extends="struts-default" namespace="/JZGDAGL">
+<!--	    <action name="teacherFileManageAction_print"  class="teacherFileManageAction" method="findChildByNbxhDWR">-->
+<!--	    	<result>/personalFileManage/print_teacher.jsp</result>-->
+<!--	    </action>-->
+	     <!-- 学生档案管理Action -->
+	    <action name="teacherFileManageAction_*" class="teacherFileManageAction" method="{1}">
+	       <result>${resultURL}</result>
+	    </action>
+	    <!-- 学生登记 -->
+	    <action name="importTeacherInfo" class="teacherFileManageAction" method="importTeacherInfo">
+	         <interceptor-ref name="fileUpload">
+	         <!-- 配置允许上传的文件类型，多个用","分隔 -->   
+             <!--  <param name="allowedTypes">   
+    　　　　　　                   application/vnd.ms-excel
+                   </param>   --> 
+              <!-- 配置允许上传的文件大小，单位字节 -->   
+              <!--  <param name="maximumSize">10239999</param> -->
+           </interceptor-ref>   
+           <interceptor-ref name="defaultStack" /> 
+	       <result>${resultURL}</result>
+	    </action>
+	 
+	 </package>
+    
+    <!-- 系统消息 -->
+    <package name="xtxx" extends="struts-default" namespace="/XTXX">
+    	<action name="getSystemMessageTree" class="systemMessageAction" method="getSystemMessageTree">
+			<result name="success">/XTXX/left.jsp</result>	
+			<result name="error">/error.jsp</result>
+		</action>
+		
+	 	<action name="systemMessageAction_*" class="systemMessageAction" method="{1}">
+			<result>${resultStr}</result>	
+		</action>
+	 </package>
+    
+    
+    <!-- 原文管理 -->
+    <package name="ywgl" extends="struts-default" namespace="/YWGL">
+		<action name="attachedFileManageAction_*" class="attachedFileManageAction" method="{1}">
+			 <result>${resultURL}</result>
+		</action>
+	 </package>
+	 
+	 
+	 
+	 <!-- 绩效管理子系统 -->
+	 <package name="JXGL" extends="struts-default" namespace="/JXGL">
+	 
+	 	<!-- 工作过程监测 -->
+	 	<action name="workProcedureMonitorAction_*" class="workProcedureMonitorAction" method="{1}">
+	 		<result name="success">${resultURL}</result>
+	 	</action>
+	 	
+	 	<!-- 考核管理 -->
+	 	<action name="evaluateManageAction_*" class="evaluateManageAction" method="{1}">
+	 		<result name="success">${resultURL}</result>
+	 	</action>
+	 	
+	 	<!-- 任务管理 -->
+	 	<action name="taskinfoManageAction_*" class="taskinfoManageAction" method="{1}">
+	 		<result name="success">${resultURL}</result>
+	 	</action>
+	 </package>
+	 
+	 <!-- 鉴定管理子系统 -->
+	 <package name="JDGL" namespace="/JDGL" extends="struts-default">
+	 	<action name="archiveAppraisalAction_*" class="archiveAppraisalAction" method="{1}">
+	 		<result name="success">${resultURL}</result>
+	 	</action>
+	 </package>
+	 
+	 <!-- 目录打印 -->
+	 <package name="PRINT" namespace="/PRINT" extends="struts-default">
+	 	<action name="catalogPrintAction_*" class="catalogPrintAction" method="{1}">
+	 		<result name="success">${resultURL}</result>
+	 	</action>
+	 </package>
+    
+    <!-- 返回json格式数据 -->
+    <package name="json" extends="json-default" namespace="/json">
+         <action name="archivesUseAction_findArchivesByBarcode" class="archivesUseAction" method="findArchivesByBarcode">
+            <result type="json">
+              <param name="root">jsonResult</param>
+            </result>
+         </action>
+         <action name="archivesUseAction_findArchivesUseUsersByName" class="archivesUseAction" method="findArchivesUseUsersByName">
+            <result type="json">
+              <param name="root">jsonResult</param>
+            </result>
+         </action>
+         <action name="YJJSAction_getArchivesBoxLabel" class="YJJSAction" method="getArchivesBoxLabel">
+            <result type="json">
+              <param name="root">jsonResult</param>
+            </result>
+         </action>
+         <action name="archivesUseAction_renewAndTeturn" class="archivesUseAction" method="renewAndTeturn">
+            <result type="json">
+              <param name="root">jsonResult</param>
+            </result>
+         </action>
+         <action name="YJJSAction_pasteArchivesBarcode" class="YJJSAction" method="pasteArchivesBarcode">
+            <result type="json">
+              <param name="root">jsonResult</param>
+            </result>
+         </action>
+         <action name="YJJSAction_putArchivesToBox" class="YJJSAction" method="putArchivesToBox">
+            <result type="json">
+              <param name="root">jsonResult</param>
+            </result>
+         </action>
+          <action name="YJJSAction_putArchiveToBox" class="YJJSAction" method="putArchiveToBox">
+            <result type="json">
+              <param name="root">jsonResult</param>
+            </result>
+         </action>
+         <action name="YJJSAction_findTopArchivesByBatNoWhitOutBarcode" class="YJJSAction" method="findTopArchivesByBatNoWhitOutBarcode">
+            <result type="json">
+              <param name="root">jsonResult</param>
+            </result>
+         </action>
+         <action name="officeDocAction_findDocBuyId" class="officeDocAction" method="findDocBuyId">
+            <result type="json">
+              <param name="root">jsonResult</param>
+            </result>
+         </action>
+    </package>
+    
+    
+    <package name="excel" extends="struts-default" namespace="/excelTest">
+         <action name="excelReaderTest" class="excelReaderTest" method="uploadFile">
+            <result>${resultURL}</result>
+         </action>
+    </package>
+    
+    
+   <!--用户管理   -->
+    <package name="XTGL" extends="struts-default" namespace="/XTGL">
+		<!--  打开用户管理界面  	-->
+    	<action name="userInfoManageAction_findAllUsers"  class="UserInfoManageAction" method="findAllUsers">
+    		<result name="success">/XTGL/userInfoManage.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+    	<!-- 打开新增用户界面 	-->
+    	<action name="userInfoManageAction_addUserInfo"  class="UserInfoManageAction" method="addUserInfo">
+    		<result name="success">/XTGL/userItem.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+    	<!--  删除用户  	-->
+    	<action name="userInfoManageAction_deleteUserInfos"  class="UserInfoManageAction" method="deleteUserInfos">
+    		<result name="success">/XTGL/userInfoManage.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+    	<!--  编辑用户  	-->
+    	<action name="userInfoManageAction_updateUserInfo"  class="UserInfoManageAction" method="updateUserInfo">
+    		<result name="success" type="chain">userInfoManageAction_findAllUsers</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+    	<action name="userInfoManageAction_modifyUserInfo"  class="UserInfoManageAction" method="modifyUserInfo">
+    		<result name="success">/XTGL/modifyUserItem.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+		<!--  修改密码  	-->
+    	<action name="userInfoManageAction_modifyPassword"  class="UserInfoManageAction" method="modifyPassword">
+    		<result name="success">/XTGL/modifyUserPassword.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+		<!-- 用户拥有的角色  	-->
+    	<action name="userInfoManageAction_findAllUserRolesByUserID"  class="userRolesInfoManageAction" method="findAllUserRolesByUserID">
+    		<result name="success">/XTGL/roleItem.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+    	<!--   删除角色用户信息	-->
+    	<action name="userInfo_userRolesInfoManageAction_delUserRoles"  class="UserInfoManageAction" method="delUserRoles">
+    		<result name="success" >/XTGL/roleItem.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+    	<!--   打开添加角色信息界面	-->
+    	<action name="userRolesInfoManageAction_findRoleInfosNotInUserID"  class="userRoleManageAction" method="findRoleInfosNotInUserID">
+    		<result name="success">/XTGL/addroleItem.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+    	<!-- 查询用户  	-->
+    	<action name="userInfoManageAction_findUserByRealName"  class="UserInfoManageAction" method="findUserByRealName">
+    		<result name="success">/XTGL/userInfoManage.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+ 		<!--	账户管理树	-->
+		<action name="getUserInfoTree"  class="UserInfoManageAction" method="getUserInfoTree">
+    		<result name="success">/XTGL/left.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+		<!--	角色管理 	-->
+	 	<action name="userRoleManageAction_findAllUserRoles"  class="userRoleManageAction" method="findAllUserRoles">
+    		<result name="success">/XTGL/userRolesManage.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+    	<!--    打开修改页面	-->
+    	<action name="userRoleManageAction_modifyUserRole"  class="userRoleManageAction" method="modifyUserRole">
+    		<result name="success">/XTGL/modifyRole.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+    	<!--   删除角色 	-->	
+    	<action name="userRoleManageAction_delUserRoles"  class="userRoleManageAction" method="delUserRoles">
+    		<result name="success" type="chain">userRoleManageAction_findAllUserRoles</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+    	<!--   删除角色用户信息	-->
+    	<action name="userRole_userRolesInfoManageAction_delUserRoles"  class="userRolesInfoManageAction" method="delUserRoles">
+    		<result name="success">/XTGL/userRoke.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+												<!-- 角色用户信息管理   	-->
+    	<!--   查询角色所属用户	-->	
+    	<action name="userRolesInfoManageAction_findAllUserRolesByRoleID"  class="userRolesInfoManageAction" method="findAllUserRolesByRoleID">
+    		<result name="success">/XTGL/userRoke.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+    	<!--  查询未分配角色的用户 	-->
+    	<action name="userRolesInfoManageAction_findUserInfosNotInRoleID"  class="UserInfoManageAction" method="findUseresNotInRoleID">
+    		<result name="success" >/XTGL/userList.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+											<!--  用户代理	-->
+		<!-- 打开添加用户代理用户界面   	-->	
+    	<action name="userRolesInfoManageAction_UserProxyList"  class="UserInfoManageAction" method="findUsersProxy">
+    		<result name="success" >/XTGL/userProxy.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+		<!--   删除用户代理 	-->
+    	<action name="userChargeUserManageAction_deleteUserChargeUser"  class="userChargeUserManageAction" method="deleteUserChargeUser">
+    		<result name="success" >/XTGL/userProxyList.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+		<!--  查询用户已经代理的用户  	-->
+    	<action name="userInfoManageAction_findUserChargeUserInfosByUserID"  class="UserInfoManageAction" method="findUserChargeUserInfosByUserID">
+    		<result name="success" >/XTGL/userProxyList.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+		<!--   查询用户未代理的用户 	-->
+    	<action name="userInfoManageAction_findAllUserUnchargeUserInfos"  class="UserInfoManageAction" method="findAllUserUnchargeUserInfos">
+    		<result name="success" >/XTGL/addUserProxyList.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	<!-- 打开查看用户代理部门界面   	-->	
+    	<action name="userChargeDepartmentManageAction_findUserChargeDepartmentByUserID"  class="userChargeDepartmentManageAction" method="findUserChargeDepartmentByUserID">
+    		<result name="success" >/XTGL/departmentProxy.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	 <!-- 打开添加用户代理部门界面   	-->	
+    	<action name="userChargeDepartmentManageAction_findUserUnChargeDepartmentByUserID"  class="userChargeDepartmentManageAction" method="findUserUnChargeDepartmentByUserID">
+    		<result name="success" >/XTGL/addDepartmentProxy.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+    	 <!-- 打开删除用户代理部门界面   	-->	
+    	<action name="userChargeDepartmentManageAction_deleteUserChargeDepartment"  class="userChargeDepartmentManageAction" method="deleteUserChargeDepartment">
+    		<result name="success" >/XTGL/departmentProxy.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+    </package>
+    
+	<!-- 系统权限管理   -->
+     <package name="QXGL" extends="struts-default" namespace="/QXGL">
+    	<action name="getUserRolesInfoTree" class="userRolesInfoManageAction" method="getUserRolesInfoTree">
+    		<result name="success">/QXGL/left.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+		<!-- 获取用户权限系统功能权限树   	-->
+    	<action name="getUserRightSystemFeatureTree" class="userRightSystemFeatureManageAction" method="getUserRightSystemFeatureTree">
+    		<result name="success">/QXGL/tab.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+    	 <action name="modifyUserRightSystemFeature" class="userRightSystemFeatureManageAction" method="modifyUserRightSystemFeature">
+    		<result name="success" type="chain">getUserRightSystemFeatureTree</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+    	 <action name="modifyUserRightArchivesType" class="userRightArchivesTypeManageAction" method="modifyUserRightArchivesType">
+    		<result name="success" type="chain">getUserRightSystemFeatureTree</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+    	
+    	<!-- 获取用户角色系统功能权限树   	-->
+    	<action name="getUserRolesSystemFeatureTree" class="userRolesSystemFeatureManageAction" method="getUserRolesSystemFeatureTree">
+    		<result name="success">/QXGL/tab.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+    	 <action name="modifyUserRolesArchivesType" class="userRolesArchivesTypeManageAction" method="modifyUserRolesArchivesType">
+    		<result name="success" type="chain">getUserRolesSystemFeatureTree</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+    	 <action name="modifyUserRolesSystemFeature" class="userRolesSystemFeatureManageAction" method="modifyUserRolesSystemFeature">
+    		<result name="success" type="chain">getUserRolesSystemFeatureTree</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+		<!--   用户档案分类资源授权树 	-->
+    	<action name="getUserRightArchivesTypeTree" class="userRightArchivesTypeManageAction" method="getUserRightArchivesTypeTree">
+    		<result name="success">/QXGL/UserRightArchivesTypeTree.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    	
+    	<!--   角色档案分类资源授权树 	-->
+    	<action name="getUserRolesArchivesTypeTree" class="userRolesArchivesTypeManageAction" method="getUserRolesArchivesTypeTree">
+    		<result name="success">/QXGL/UserRolesArchivesTypeTree.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+    </package>
+    
+    
+    							<!-- 综合统计   -->
+     <package name="ZHTJ" extends="struts-default" namespace="/ZHTJ">
+		<!--  统计结果树   -->
+    	<action name="getStatReportTree" class="statReportManageAction" method="getStatReportTree">
+    		<result name="success">/ZHTJ/left.jsp</result>
+    		<result name="error">/error.jsp</result>
+    	</action>
+		<!--   统计报表结果案卷档案馆藏情况     -->
+        <action name="findAllReportResultArchivesCollection" class="statReportManageAction" method="findAllReportResultArchivesCollection">
+    		<result name="success">/ZHTJ/reportResultArchivesCollection.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   报表统计结果档案利用人情况    -->
+        <action name="findAllReportResultArchivesUsePerson" class="statReportManageAction" method="findAllReportResultArchivesUsePerson">
+    		<result name="success">/ZHTJ/reportResultArchivesUsePerson.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	
+    	<!--   报表统计结果档案分类利用情况    -->
+        <action name="findAllReportResultArchivesTypeUse" class="statReportManageAction" method="findAllReportResultArchivesTypeUse">
+    		<result name="success">/ZHTJ/reportResultArchivesTypeUse.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   报表统计结果档案利用目的情况   -->
+        <action name="findAllReportResultArchivesUsePurpose" class="statReportManageAction" method="findAllReportResultArchivesUsePurpose">
+    		<result name="success">/ZHTJ/reportResultArchivesUsePurpose.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   报表统计结果案卷档案归档情况   -->
+        <action name="findAllReportResultArchivesSaved" class="statReportManageAction" method="findAllReportResultArchivesSaved">
+    		<result name="success">/ZHTJ/reportResultArchivesSaved.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   报表统计结果部门归档情况   -->
+        <action name="findAllReportResultDepartmentSaved" class="statReportManageAction" method="findAllReportResultDepartmentSaved">
+    		<result name="success">/ZHTJ/reportResultDepartmentSaved.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   报表统计结果人事档案转出情况    -->
+        <action name="findAllReportResultPersionalArchivesMoveOut" class="statReportManageAction" method="findAllReportResultPersionalArchivesMoveOut">
+    		<result name="success">/ZHTJ/reportResultPersionalArchivesMoveOut.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   报表统计结果档案销毁情况    -->
+        <action name="findAllReportResultArchivesDestroy" class="statReportManageAction" method="findAllReportResultArchivesDestroy">
+    		<result name="success">/ZHTJ/reportResultArchivesDestroy.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   报表统计结果档案开放情况    -->
+        <action name="findAllReportResultArchivesPublic" class="statReportManageAction" method="findAllReportResultArchivesPublic">
+    		<result name="success">/ZHTJ/reportResultArchivesPublic.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   报表统计结果库房设施利用情况    -->
+        <action name="findAllReportResultStoreroomUse" class="statReportManageAction" method="findAllReportResultStoreroomUse">
+    		<result name="success">/ZHTJ/reportResultStoreroomUse.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   报表统计结果库房温湿度年度变化情况   -->
+        <action name="findAllReportResultTempratureHumidityForYear" class="statReportManageAction" method="findAllReportResultTempratureHumidityForYear">
+    		<result name="success">/ZHTJ/reportResultTempratureHumidityForYear.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   报表统计结果库房温湿度月度变化情况     -->
+        <action name="findAllReportResultTempratureHumidityForMonth" class="statReportManageAction" method="findAllReportResultTempratureHumidityForMonth">
+    		<result name="success">/ZHTJ/reportResultTempratureHumidityForMonth.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   报表统计结果出证收费情况     -->
+        <action name="findAllReportResultCertificateCharge" class="statReportManageAction" method="findAllReportResultCertificateCharge">
+    		<result name="success">/ZHTJ/reportResultCertificateCharge.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   报表统计结果公文登记情况   -->
+        <action name="findAllReportResultOfficialArchivesInput" class="statReportManageAction" method="findAllReportResultOfficialArchivesInput">
+    		<result name="success">/ZHTJ/reportResultOfficialArchivesInput.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   报表统计结果系统访问情况    -->
+        <action name="findAllReportResultSystemVisit" class="statReportManageAction" method="findAllReportResultSystemVisit">
+    		<result name="success">/ZHTJ/reportResultSystemVisit.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   报表统计结果工作情况    -->
+        <action name="findAllReportResultWorkProcedure" class="statReportManageAction" method="findAllReportResultWorkProcedure">
+    		<result name="success">/ZHTJ/reportResultWorkProcedure.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+			
+											<!--  打印	-->
+    	<!--   打印统计报表结果案卷档案馆藏情况     -->
+        <action name="printReportResultArchivesCollection" class="statReportManageAction" method="findAllReportResultArchivesCollection">
+    		<result name="success">/ZHTJ/print_reportResultArchivesCollection.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   打印报表统计结果档案利用人情况    -->
+        <action name="printReportResultArchivesUsePerson" class="statReportManageAction" method="findAllReportResultArchivesUsePerson">
+    		<result name="success">/ZHTJ/print_reportResultArchivesUsePerson.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   打印报表统计结果档案利用目的情况   -->
+        <action name="printReportResultArchivesUsePurpose" class="statReportManageAction" method="findAllReportResultArchivesUsePurpose">
+    		<result name="success">/ZHTJ/print_reportResultArchivesUsePurpose.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   打印报表统计结果案卷档案归档情况   -->
+        <action name="printReportResultArchivesSaved" class="statReportManageAction" method="findAllReportResultArchivesSaved">
+    		<result name="success">/ZHTJ/print_reportResultArchivesSaved.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   打印报表统计结果部门归档情况   -->
+        <action name="printReportResultDepartmentSaved" class="statReportManageAction" method="findAllReportResultDepartmentSaved">
+    		<result name="success">/ZHTJ/print_reportResultDepartmentSaved.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   打印报表统计结果人事档案转出情况    -->
+        <action name="printReportResultPersionalArchivesMoveOut" class="statReportManageAction" method="findAllReportResultPersionalArchivesMoveOut">
+    		<result name="success">/ZHTJ/print_reportResultPersionalArchivesMoveOut.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   打印报表统计结果档案销毁情况    -->
+        <action name="printReportResultArchivesDestroy" class="statReportManageAction" method="findAllReportResultArchivesDestroy">
+    		<result name="success">/ZHTJ/print_reportResultArchivesDestroy.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    		<!--   打印报表统计结果档案开放情况    -->
+        <action name="printReportResultArchivesPublic" class="statReportManageAction" method="findAllReportResultArchivesPublic">
+    		<result name="success">/ZHTJ/print_reportResultArchivesPublic.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   打印报表统计结果库房设施利用情况    -->
+        <action name="printReportResultStoreroomUse" class="statReportManageAction" method="findAllReportResultStoreroomUse">
+    		<result name="success">/ZHTJ/print_reportResultStoreroomUse.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   打印报表统计结果库房温湿度年度变化情况   -->
+        <action name="printReportResultTempratureHumidityForYear" class="statReportManageAction" method="findAllReportResultTempratureHumidityForYear">
+    		<result name="success">/ZHTJ/print_reportResultTempratureHumidityForYear.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   打印报表统计结果库房温湿度月度变化情况     -->
+        <action name="printReportResultTempratureHumidityForMonth" class="statReportManageAction" method="findAllReportResultTempratureHumidityForMonth">
+    		<result name="success">/ZHTJ/print_reportResultTempratureHumidityForMonth.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   打印报表统计结果出证收费情况     -->
+        <action name="printReportResultCertificateCharge" class="statReportManageAction" method="findAllReportResultCertificateCharge">
+    		<result name="success">/ZHTJ/print_reportResultCertificateCharge.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   打印报表统计结果公文登记情况   -->
+        <action name="printReportResultOfficialArchivesInput" class="statReportManageAction" method="findAllReportResultOfficialArchivesInput">
+    		<result name="success">/ZHTJ/print_reportResultOfficialArchivesInput.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   打印报表统计结果系统访问情况    -->
+        <action name="printReportResultSystemVisit" class="statReportManageAction" method="findAllReportResultSystemVisit">
+    		<result name="success">/ZHTJ/print_reportResultSystemVisit.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   打印报表统计结果工作情况    -->
+        <action name="printReportResultWorkProcedure" class="statReportManageAction" method="findAllReportResultWorkProcedure">
+    		<result name="success">/ZHTJ/print_reportResultWorkProcedure.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	<!--   打印报表统计结果档案分类利用情况    -->
+        <action name="printReportResultArchivesTypeUse" class="statReportManageAction" method="findAllReportResultArchivesTypeUse">
+    		<result name="success">/ZHTJ/print_reportResultArchivesTypeUse.jsp</result>
+        	<result name="error">/error.jsp</result>
+    	</action>
+    	
+    	<!-- excel文件导出   -->
+    	<action name="excel_*" class="statReportExcelExport" method="{1}" >   
+           <result name="success" type="stream">   
+               <param name="contentType">application/vnd.ms-excel</param>   
+                <param name="inputName">excelStream</param>   
+                <param name="contentDisposition">filename="${fileName}.xsl"</param>   
+                <param name="bufferSize">1024</param>   
+            </result>
+            <result name="error">/error.jsp</result>
+        </action> 
+        
+    </package>
+</struts>

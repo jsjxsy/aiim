@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">	
+
+					<!-- 统合统计结果页面展示-->
+	<!-- 配置dao-->
+	<bean id="statReportDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.StatReportDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="reportResultArchivesCollectionDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ReportResultArchivesCollectionDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="reportPrintSettingDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ReportPrintSettingDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="reportResultArchivesUsePersonDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ReportResultArchivesUsePersonDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="reportResultArchivesTypeUseDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ReportResultArchivesTypeUseDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="reportResultArchivesUsePurposeDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ReportResultArchivesUsePurposeDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="reportResultArchivesPublicDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ReportResultArchivesPublicDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="reportResultArchivesSavedDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ReportResultArchivesSavedDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="reportResultArchivesDestroyDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ReportResultArchivesDestroyDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="reportResultCertificateChargeDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ReportResultCertificateChargeDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="reportResultDepartmentSavedDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ReportResultDepartmentSavedDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="reportResultOfficialArchivesInputDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ReportResultOfficialArchivesInputDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="reportResultPersionalArchivesMoveOutDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ReportResultPersionalArchivesMoveOutDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="reportResultStoreroomUseDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ReportResultStoreroomUseDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="reportResultSystemVisitDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ReportResultSystemVisitDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="reportResultTempratureHumidityForMonthDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ReportResultTempratureHumidityForMonthDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="reportResultTempratureHumidityForYearDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ReportResultTempratureHumidityForYearDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="reportResultWorkProcedureDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ReportResultWorkProcedureDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<!-- 配置entity-->
+	
+	<!-- 配置service-->
+	<bean id="statReportManageService" class="com.orifound.aiim.bll.service.impl.StatReportManageServiceImpl">
+		<property name="statReportDao" ref="statReportDao"/>
+		<property name="reportResultArchivesCollectionDao" ref="reportResultArchivesCollectionDao"/>
+		<property name="reportResultArchivesUsePersonDao" ref="reportResultArchivesUsePersonDao"/>
+		<property name="reportResultArchivesTypeUseDao" ref="reportResultArchivesTypeUseDao"/>
+		<property name="reportResultArchivesUsePurposeDao" ref="reportResultArchivesUsePurposeDao"/>
+		<property name="reportResultArchivesSavedDao" ref="reportResultArchivesSavedDao"/>
+		<property name="reportResultArchivesDestroyDao" ref="reportResultArchivesDestroyDao"/>
+		<property name="reportResultArchivesPublicDao" ref="reportResultArchivesPublicDao"/>
+		<property name="reportResultOfficialArchivesInputDao" ref="reportResultOfficialArchivesInputDao"/>
+		<property name="reportResultCertificateChargeDao" ref="reportResultCertificateChargeDao"/>
+		<property name="reportResultDepartmentSavedDao" ref="reportResultDepartmentSavedDao"/>
+		<property name="reportResultPersionalArchivesMoveOutDao" ref="reportResultPersionalArchivesMoveOutDao"/>
+		<property name="reportResultTempratureHumidityForMonthDao" ref="reportResultTempratureHumidityForMonthDao"/>
+		<property name="reportResultTempratureHumidityForYearDao" ref="reportResultTempratureHumidityForYearDao"/>
+		<property name="reportResultSystemVisitDao" ref="reportResultSystemVisitDao"/>
+		<property name="reportResultStoreroomUseDao" ref="reportResultStoreroomUseDao"/>
+		<property name="reportResultWorkProcedureDao" ref="reportResultWorkProcedureDao"/>
+	</bean>
+	<bean id="reportPrintSettingManageService" class="com.orifound.aiim.bll.service.impl.ReportPrintSettingManageServiceImpl">
+		<property name="reportPrintSettingDao" ref="reportPrintSettingDao"/>
+	</bean>
+	<!-- 配置action-->
+	<bean id="statReportManageAction" class="com.orifound.aiim.web.struts.StatReportManageAction" scope="prototype">
+		<property name="statReportManageService" ref="statReportManageService"/>
+		<property name="reportPrintSettingManageService" ref="reportPrintSettingManageService"/>
+	</bean>	
+	<bean id="statReportExcelExport" class="com.orifound.aiim.web.struts.StatReportExcelExport" scope="prototype">
+		<property name="statReportManageService" ref="statReportManageService"/>
+	</bean>		
+</beans>

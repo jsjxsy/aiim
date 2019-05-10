@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">	
+	                    
+<!-- 鉴定管理Spring配置文件 -->
+
+	<!-- 配置dao-->
+	<!-- 存毁鉴定明细情况表的DAO -->
+	<bean id="appraisalKeepDestroyDetailDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.AppraisalKeepDestroyDetailDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	
+	<!-- 档案开放/公开鉴定表的DAO -->
+	<bean id="appraisalPublicDetailDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.AppraisalPublicDetailDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	
+	<!-- 划控鉴定的档案明细信息DAO -->
+	<bean id="appraisalUseScopesDetailDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.AppraisalUseScopesDetailDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	
+	
+	<!-- 配置entity-->
+	
+	
+	<!-- 配置service-->
+	<!-- 档案归档信息的管理服务类 -->
+	<bean id="archivesInfoSavedManageService" class="com.orifound.aiim.bll.service.impl.ArchivesInfoSavedManageServiceImpl" />
+	
+	<!-- 存毁鉴定明细情况管理服务类 -->
+	<bean id="appraisalKeepDestroyDetailManageService" class="com.orifound.aiim.bll.service.impl.AppraisalKeepDestroyDetailManageServiceImpl" />
+	
+	<!-- 档案公开/开放鉴定明细情况表的实体类管理服务类 -->
+	<bean id="appraisalPublicDetailManageService" class="com.orifound.aiim.bll.service.impl.AppraisalPublicDetailManageServiceImpl"/>
+	
+	<!-- 档案划分控制鉴定明细情况表的实体类管理服务类 -->
+	<bean id="appraisalUseScopesDetailManageService" class="com.orifound.aiim.bll.service.impl.AppraisalUseScopesDetailManageServiceImpl" />
+	
+	<!-- 配置action-->
+	
+	<!-- 鉴定管理Action -->
+	<bean id="archiveAppraisalAction" class="com.orifound.aiim.web.struts.ArchiveAppraisalAction" scope="prototype" />
+	
+	<!-- 鉴定管理DWR  -->
+	<bean id="archiveAppraisalDWR" class="com.orifound.aiim.web.struts.ArchiveAppraisalDWR" />
+		
+</beans>

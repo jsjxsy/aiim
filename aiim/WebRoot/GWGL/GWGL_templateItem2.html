@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>查看模板信息</title>
+<script type="text/javascript" >
+//打开日期输入页面
+function PopUpCalendar(ctrlobj,type)
+{
+	var url;
+	var obj=document.getElementById(ctrlobj);
+	if (obj==null) {
+		return;
+	}
+	var obj1=obj;
+	showx=obj1.offsetLeft+window.screenLeft;
+	showy=obj1.offsetTop+window.screenTop+20;
+	while (obj1=obj1.offsetParent) {
+		showx+=obj1.offsetLeft;
+		showy+=obj1.offsetTop;
+	}
+	if (type==true) {
+		url="JS/CalendarWithFormat.html";
+	}
+	else {
+		url="JS/CalendarWithOutFormat.html"
+	}
+	var retval = window.showModalDialog(url, "", "dialogWidth:197px; dialogHeight:210px; dialogLeft:"+showx+"px; dialogTop:"+showy+"px; status:no; directories:yes;scrollbars:no;Resizable=no;help=no; "  );
+	if( retval != null ){
+		obj.value = retval;
+		
+	}
+	return false;
+}
+
+
+//打开原文管理页面
+function ywgl()
+{	
+	var retval =window.showModalDialog('YWGL.htm', "", "dialogWidth:590px; dialogHeight:430px;top=0;left=0;status:no; toolbar=no;menubar=no;scroll:0;location:yes; resizable=no;location=n"  ); 
+}
+
+</script>
+<style type="text/css">
+#inputs input,select,textarea{
+	background-color:;
+}
+</style>
+
+</head>
+
+<body style="margin:0px; background-color:#f9f9f9;">
+
+
+	
+	<br/>	
+	<form>	
+	<table id="inputs" width="100%" style="height:100%;  margin-left:20px;  font-size:15px;" cellpadding="0" cellspacing="0" >
+		<tr>
+			<td width="70px">
+				模板类型
+			</td>
+			<td>
+				<select style="width:150px;margin-right:10px;" >
+					<option value="0"></option>
+					<option value="0" selected="selected">公告</option>					
+				</select>
+				选择模板<input type="file"  style="width:200px;"/>
+			</td>
+		</tr>
+		<tr style="height:10px;">	
+				</tr>
+		
+	
+		
+		<tr >
+			<td>
+			模板名称
+			</td>
+			<td><input type="text" style="width: 416px;" value="测试名称1"/></td>
+		</tr>
+		<tr style="height:10px;">	
+		</tr>
+
+		<tr >
+			<td>
+				建立人
+			</td>
+			<td>
+				<input type="text" style="width: 145px; margin-right:10px;" value="张成" />建立时间<input type="text" id="xcDate" style=" width: 178px;" value="2010-01-08"/><input  type="image" style="margin-right:20px;" src="images/DropdownTime.gif" onclick="PopUpCalendar('xcDate',true);return false;"  />
+			</td>
+		</tr>
+		<tr>
+			<td>
+			&nbsp;
+			</td>
+			<td>
+				<div style="display:inline-block; width:320px; color:blue;" id="saveResult" align="right" ></div><input type="button" value="保存" onclick="document.getElementById('saveResult').innerText='保存成功！'"  style="; margin-top:5px;"/>
+				<input type="reset" value="重置" onclick="document.getElementById('saveResult').innerText=''"/>
+			</td>
+		</tr>		
+	</table>
+	</form>
+</body>
+</html>

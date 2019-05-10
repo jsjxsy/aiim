@@ -1,0 +1,32 @@
+body {font-size:10px;}
+
+/* */
+.tablePrint {border-collapse:collapse;border-width:1px 0 0 1px;border-color:black; margin:0px;font-size:10px;text-align: center;star:expression(this.align='center')}
+.tablePrint caption {font-weight:bolder;}
+.tablePrint th,.tablePrint td {border-width:0px 1px 1px 0px;border-color:black;padding:2px;}
+.tablePrint td{vertical-align: top;}
+
+.appraisalPersion {float: left;overflow:auto; width:498px; border:thin 1px solid;margin-left:28px;}
+.appraisalReason {float: left;overflow:auto; width:498px; height:80px; border:thin 1px solid;margin-left:12px;}
+
+.trBorder {border-width:1px 0 1px 0;border-color:black;}
+.trBorder td {border-width:1px 1px 1px 0px;border-color:black;}
+
+
+.trBorderBold {border-width:2px 0 2px 0;}
+.trBorderBold td {border-width:1px 1px 1px 0;}
+
+.tableBorder_thin{border:thin solid black;border-bottom: 0;border-left: 0;}
+.tableBorder_none{border:none;}
+.tableBorder_thick{border:thick solid black;border-bottom: 0;border-left: 0;}
+
+.archivesinfoTitle{text-align: left;white-space:normal; word-break:break-all;width: 150px;}
+
+.appraisalTR{}
+
+
+@media print  
+{
+	.noprint {display:None;}
+	.pageNext{page-break-before: always;}
+}

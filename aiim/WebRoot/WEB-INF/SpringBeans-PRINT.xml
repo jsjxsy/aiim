@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">	
+	                    
+<!-- 目录打印Spring配置文件 -->
+
+	<!-- 配置dao-->
+	
+	<!-- 目录打印dao接口实现类（SQL Server 平台实现） -->
+	<bean id="catalogPrintDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.CatalogPrintDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 档案出证信息表的DAO实现类 -->
+	<bean id="archivesCertificateInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ArchivesCertificateInfoDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!--出证学生信息表的DAO实现  -->
+	<bean id="certificateStudentDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.CertificateStudentDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!--学生成绩信息表的DAO  -->
+	<bean id="studentGradeInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.StudentGradeInfoDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 配置service-->
+	<!-- 目录打印管理服务实现类  -->
+	<bean id="catalogPrintManageService" class="com.orifound.aiim.bll.service.impl.CatalogPrintManageServiceImpl" />
+	
+	<!-- 档案出证明细情况管理服务实现类 -->
+	<bean id="archivesCertificateInfoManageService" class="com.orifound.aiim.bll.service.impl.ArchivesCertificateInfoManageServiceImpl" />
+	
+	<!-- 出证学生信息管理服务实现类 -->
+	<bean id="certificateStudentManageService" class="com.orifound.aiim.bll.service.impl.CertificateStudentManageServiceImpl" />
+	
+	<!-- 学生成绩信息表管理服务实现类 -->
+	<bean id="studentGradeInfoManageService" class="com.orifound.aiim.bll.service.impl.StudentGradeInfoManageServiceImpl" />
+	
+	<!-- 配置action-->
+	
+	<!-- 目录打印Action -->
+	<bean id="catalogPrintAction" class="com.orifound.aiim.web.struts.CatalogPrintAction" scope="prototype" />
+	
+	<!-- 档案出证管理Action -->
+	<bean id="archivesCertificateManageAction" class="com.orifound.aiim.web.struts.ArchivesCertificateManageAction" scope="prototype" />
+	<!-- DWR  -->
+	
+	<!-- 档案出证管理DWR -->
+	<bean id="archivesCertificateManageDWR" class="com.orifound.aiim.web.struts.ArchivesCertificateManageDWR" />	
+</beans>

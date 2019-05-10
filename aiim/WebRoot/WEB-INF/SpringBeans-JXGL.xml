@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">	
+	                    
+<!-- 绩效管理Spring配置文件 -->
+
+	<!-- 配置dao-->
+	<!--考核明细表(EvaluateDetails)的DAO  -->
+	<bean id="evaluateDetailsDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.EvaluateDetailsDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 效考评项目字典表 (DD_EvaluateItem)的DAO -->
+	<bean id="evaluateItemDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.EvaluateItemDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 考核等级字典表(DD_EvaluateLevel)的DAO -->
+	<bean id="evaluateLevelDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.EvaluateLevelDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 考核登记表 (EvaluateRegister)的DAO -->
+	<bean id="evaluateRegisterDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.EvaluateRegisterDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 职务信息数据字典表 DAO -->
+	<bean id="dutyDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.DutyDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 工作任务信息表 (TaskInfo)的DAO -->
+	<bean id="taskInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.TaskInfoDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 工作任务回复信息表 (TaskResponse)的DAO -->
+	<bean id="taskResponseDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.TaskResponseDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!--  
+	<bean id="" class=""></bean>-->
+	
+	<!-- 配置entity-->
+	
+	
+	<!-- 配置service-->
+	<!-- 绩效管理服务类 -->
+	<bean id="performanceManageService" class="com.orifound.aiim.bll.service.impl.PerformanceManageServiceImpl" />
+	
+	<!-- 考核管理 -->
+	<bean id="evaluateManageServiceImpl" class="com.orifound.aiim.bll.service.impl.EvaluateManageServiceImpl" />
+	
+	<!-- 绩效考评项目字典表 服务类 -->
+	<bean id="evaluateItemManageService" class="com.orifound.aiim.bll.service.impl.EvaluateItemManageServiceImpl" />
+	
+	<!-- 考核评分项管理服务类 -->
+	<bean id="evaluateLevelManageService" class="com.orifound.aiim.bll.service.impl.EvaluateLevelManageServiceImpl" />
+	
+	<!--  职务信息数据字典服务类 -->
+	<bean id="dutyManageService" class="com.orifound.aiim.bll.service.impl.DutyManageServiceImpl">
+		<property name="dutyDao" ref="dutyDao" />
+	</bean>
+	
+	<!--任务信息管理服务实现类  -->
+	<bean id="taskInfoManageService" class="com.orifound.aiim.bll.service.impl.TaskInfoManageServiceImpl" />
+	
+	<!--任务回复信息管理服务实现类  -->
+	<bean id="taskResponseManageService" class="com.orifound.aiim.bll.service.impl.TaskResponseManageServiceImpl" />
+	
+	
+	<!-- 配置action-->
+	
+	<!-- 工作过程控制类 -->	
+	<bean id="workProcedureMonitorAction" class="com.orifound.aiim.web.struts.WorkProcedureMonitorAction" scope="prototype" />
+	
+	<!-- 考核管理 -->
+	<bean id="evaluateManageAction" class="com.orifound.aiim.web.struts.EvaluateManageAction" scope="prototype" />
+	
+	<!-- 任务管理 -->
+	<bean id="taskinfoManageAction" class="com.orifound.aiim.web.struts.TaskinfoManageAction" scope="prototype"/>
+	
+	<!-- 绩效管理DWR -->
+	<bean id="performanceManageDWR" class="com.orifound.aiim.web.struts.PerformanceManageDWR" />
+		
+</beans>

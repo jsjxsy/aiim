@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>系统消息</title>
+
+<script type="text/javascript">
+
+//打开简易查询页面
+function viewDetail()
+{
+	window.showModalDialog("Work_Info_show.htm","newwindow","dialogWidth=480px;dialogHeight:280px;top=0;left=0;status:no; toolbar=no;menubar=no;scroll:0;location:yes; resizable=no;location=n");
+
+}
+
+//处理单击事件
+var rowId="";   //保存上一次点击行“tr”的ID；
+var rowColor="";   //保存上一次点击行的颜色
+function clickRow1(obj)
+{
+	if(document.getElementById(rowId)==null){//第一次点击处理
+		rowId=obj.id;	//保存被点击行的ID
+		rowColor=obj.style.backgroundColor;//保存被点击行的颜色
+		obj.style.backgroundColor='#a3c9ff';
+	
+	}else{
+		document.getElementById(rowId).style.backgroundColor=rowColor;
+		//'#e0edff';
+		obj.style.backgroundColor='#a3c9ff';
+		rowId = obj.id;
+	}
+	 
+}
+
+
+
+//简单查询
+function find()
+{
+	document.getElementById('findDiv').style.display=(document.getElementById('findDiv').style.display=='none')? 'block':'none';
+}
+
+
+
+//改变图片背景颜色
+function changeImage(obj,img) {
+	if (obj) {
+		obj.src="images/"+img;
+	}
+}
+
+</script>
+
+
+<style type="text/css">
+/*设置标题底色*/
+.bgTitle { background-color:#a3c9ff;height:25px;}
+/*设置表格顶部框底色*/
+.borderTop {	border-top:#104da6 1px solid;	border-left:#104da6 1px solid;	border-right:#104da6 1px solid;}
+body 
+{
+	height:100%;
+	color: #000000; 
+	font-size:13px;
+	margin:0; 
+	background-color:White;
+}
+/*表头*/
+.tableTitle {font-weight:bold; text-align:left; padding:4px 0 0 5px;}
+.text{ font-size:9pt;}
+.tableHead{
+	font-weight:bold; text-align:center; padding:4px 0 0 0px;
+}
+/*
+#showTable tbody tr:hover{
+	background-color:#a3c9ff;
+}
+*/
+/*设置被选行的颜色*/
+.selectRowColor{
+	background-color:#a4caef;
+}
+table tr{
+	height:20px;
+}
+
+
+
+
+</style>
+
+</head>
+
+<body>
+<input type="image" src="images/DelS.gif" onmouseover="changeImage(this,'DelS2.gif')" onmouseout="changeImage(this,'DelS.gif')"  />
+
+<input type="image" src="images/FindS.gif" onmouseover="changeImage(this,'FindS2.gif')" onmouseout="changeImage(this,'FindS.gif')" onclick="find()" />
+<div style="width:100%;display:none" align="center"  id="findDiv">
+<table>
+	<tr  align="left">
+		<td style="width:50px;">标题</td><td><input type="text"/></td>
+	</tr>
+	<tr align="left">
+		<td>发言人</td><td><input type="text" /></td>
+	</tr>
+	<tr>
+		<td colspan="2"><input type="button" value="查询" onclick="javascript:document.getElementById('findDiv').style.display='none';" /></td>
+	</tr>
+</table>
+	
+
+</div>
+
+<table id="showTable" width="100%" style="margin:0px; border: #104da6 1px solid;" cellspacing="1px" cellpadding="0px" >						
+	<thead class="tableHead">
+		<tr class="bgTitle">
+			<th colspan="3" align="left">
+				系统消息				
+			</th>
+			<th colspan="4" align="right">
+			第1页 共1页 共3条记录
+			</th>
+		</tr>
+		<tr class="bgTitle">
+			<th width="35px">选择</th>								
+			<th style="width:30px;">序号</th>
+			<th>标题</th>								
+			<th>发言人</th>
+			<th>发言时间</th>
+			
+			<th>状态</th>
+			
+			<th align="center"  width="60px" >详细内容</th>
+			
+		</tr>
+	</thead>
+	<tbody>
+		<tr  bgcolor="#eef5ff" id="row1" onclick="clickRow1(this)">
+			<td align="center"><input type="checkbox" name="chek" value="row1"/></td>
+			<td align="center" >1</td>
+			<td>您提交的题名为《测试题名1》的借档申请未通过审核</td>
+			<td>档案管理人员</td>
+			<td>2010-01-15</td>
+			<td id="wy1">未阅</td>
+			<td align="center"><a href="javascript:viewDetail();" onclick="document.getElementById('wy1').innerText='已阅'">查看</a></td>
+		</tr>
+		<tr bgcolor="#e0edff" id="row2" onclick="clickRow1(this)">
+			<td align="center">
+			<input name="chek0" value="row2"  type="checkbox"/></td>
+			<td align="center" >2</td>
+			<td>您提交的题名为《测试题名1》的查档申请已通过审核</td>
+			<td>档案管理人员</td>
+			<td>2010-01-14</td>
+			<td  id="wy2">未阅</td>
+			<td align="center"><a href="javascript:viewDetail()" onclick="document.getElementById('wy2').innerText='已阅'">查看</a></td>
+		</tr>
+		<tr bgcolor="#eef5ff" id="row3" onclick="clickRow1(this)">
+			<td align="center">
+			<input name="chek0" value="row2"  type="checkbox"/></td>
+			<td align="center" >3</td>
+			<td>您提交的题名为《测试题名1》的原文查看申请已通过审核</td>
+			<td>档案管理人员</td>
+			<td>2010-01-14</td>
+			<td  id="wy3">未阅</td>
+			<td align="center"><a href="javascript:viewDetail()" onclick="document.getElementById('wy3').innerText='已阅'">查看</a></td>
+		</tr>
+
+		<tr bgcolor="#e0edff" id="row3"   onclick="clickRow1(this)">
+			<td align="center">
+			<input name="chek1" value="row3"  type="checkbox"/></td>
+			<td align="center" >4</td>
+			<td>请移交著录审核通过的档案</td>
+			<td>业务指导室</td>
+			<td>2010-01-13</td>
+			<td>已阅</td>
+			<td align="center"><a href="javascript:viewDetail()">查看</a></td>
+		</tr>
+		
+		<tr bgcolor="#eef5ff" id="row4"   onclick="clickRow1(this)">
+			<td align="center">
+			<input name="chek1" value="row3"  type="checkbox"/></td>
+			<td align="center" >5</td>
+			<td>关于高校档案分类办法的通知</td>
+			<td>馆长</td>
+			<td>2010-01-12</td>
+			<td>已阅</td>
+			<td align="center"><a href="javascript:viewDetail()">查看</a></td>
+		</tr>
+
+	</tbody>
+</table>
+
+	
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//Dtd Xhtml 1.0 transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>录入盒条码</title>
+<link rel="stylesheet" type="text/css" href="css/common.css">
+</head>
+
+<body>
+ <table width="100%" style="margin-top:20px;">
+   <tr>
+     <td width="50%"  align="right" style="height: 26px;font-size:12px;">请扫描或输入盒条码：</td>
+		<td align="center" style="height: 26px"><input id="barcode" type="text" value=""/></td>
+   </tr>
+   <tr>
+     <td align="center" colspan="2">
+         <input id="ok" type="button" class="button" value="确  定" onclick="closeW();"/>
+         <input type="reset" style="margin-left:10px" class="button" value="取  消" onclick="closeC()"/>
+     </td>
+   </tr>
+
+ </table>
+ <script type="text/javascript">
+ function closeW(){
+	 if(document.getElementById("barcode").value == ""){
+		 alert("请扫描或输入盒条码！");
+	 }else{
+		 window.returnValue=document.getElementById("barcode").value;
+	     window.close();
+	 }
+ }
+ function closeC(){
+	 window.close();
+ }
+ </script>
+</body>
+
+</html>

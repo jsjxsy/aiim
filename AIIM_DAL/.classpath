@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/AIIM_Entity"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.1/commons-logging-1.1.1.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/AIIM_DAL/lib/commons-logging-1.1.1/commons-logging-1.1.1-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/Microsoft SQL Server JDBC Driver 3.0/sqljdbc4.jar"/>
+	<classpathentry kind="lib" path="lib/spring-framework-3.0.2.RELEASE/org.springframework.beans-3.0.2.RELEASE.jar" sourcepath="lib/spring-framework-3.0.2.RELEASE/org.springframework.beans-sources-3.0.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-framework-3.0.2.RELEASE/org.springframework.core-3.0.2.RELEASE.jar" sourcepath="lib/spring-framework-3.0.2.RELEASE/org.springframework.core-sources-3.0.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-framework-3.0.2.RELEASE/org.springframework.jdbc-3.0.2.RELEASE.jar" sourcepath="lib/spring-framework-3.0.2.RELEASE/org.springframework.jdbc-sources-3.0.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-framework-3.0.2.RELEASE/org.springframework.transaction-3.0.2.RELEASE.jar" sourcepath="lib/spring-framework-3.0.2.RELEASE/org.springframework.transaction-sources-3.0.2.RELEASE.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

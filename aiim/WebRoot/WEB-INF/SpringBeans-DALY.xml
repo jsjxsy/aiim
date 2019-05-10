@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">	
+
+	<!-- 配置dao-->
+	<bean id="archivesCertificateRegisterDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ArchivesCertificateRegisterDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<!-- 配置entity-->
+	
+	<!-- 配置service-->
+	<bean id="archivesCertificateRegisterManageService" class="com.orifound.aiim.bll.service.impl.ArchivesCertificateRegisterManageServiceImpl">
+		<property name="archivesCertificateRegisterDao" ref="archivesCertificateRegisterDao"/>
+	</bean>
+	
+	
+	<!-- 配置action-->
+	<bean id="archivesInfoManageAction" class="com.orifound.aiim.web.struts.ArchivesInfoManageAction" scope="prototype">			
+	</bean>
+	<!-- 部门管理 -->
+	<!--DWR	-->
+</beans>

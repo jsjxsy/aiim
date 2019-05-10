@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	                    http://www.springframework.org/schema/tx
+	                    http://www.springframework.org/schema/tx/spring-tx-3.0.xsd                  
+	                    http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                        http://www.springframework.org/schema/context 
+                        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+    
+    <!-- 可单独适用properties配置文件来写jdbc连接参数 示例：<property name="username" value="${jdbc.username}" />-->                    	
+    <context:property-placeholder location="classpath:aiim.properties"/>
+	
+	
+	<!-- 配置DataSource数据源 -->
+	<!-- 
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+
+		  <property name="driverClassName"
+			value="com.microsoft.sqlserver.jdbc.SQLServerDriver">
+		</property>
+		<property name="url"
+			value="jdbc:sqlserver://localhost:1433;DatabaseName=AIIM_DB;">
+		</property>
+		<property name="username" value="sa"></property>
+		<property name="password" value="123"></property>
+	</bean>
+	-->
+	<bean id="dataSource" class="com.orifound.aiim.web.util.AIIMDataSource">
+	    <!-- <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/> --> 
+		<!-- <property name="url"value="jdbc:sqlserver://xsy:1433;DatabaseName=AIIM_DB;"/> --> 
+		<!-- <property name="username" value="sa"/> --> 
+		<!-- <property name="password" value="123"/> --> 
+
+		<!-- 连接池启动时创建的初始化连接数量 -->  
+
+<!--        <property name="initialSize" value="5"/>   -->
+
+        <!-- <property name="initialSize" value="5"/>   --> 
+
+        <!-- 连接池在同一时间能够分配的最大活动连接的数量, 如果设置为非正数则表示不限制 -->  
+
+<!--        <property name="maxActive" value="50"/>   -->
+
+        <!-- <property name="maxActive" value="50"/>  -->  
+
+        <!-- 最大空闲值.连接池中容许保持空闲状态的最大连接数量,超过的空闲连接将被释放,如果设置为负数表示不限制 -->  
+
+<!--        <property name="maxIdle" value="20"/>   -->
+        <!--  最小空闲值.连接池中容许保持空闲状态的最小连接数量,低于这个数量将创建新的连接,如果设置为0则不创建 -->  
+<!--        <property name="minIdle" value="10"/> -->
+     
+
+        <!-- <property name="maxIdle" value="20"/>   --> 
+        <!-- 最小空闲值.连接池中容许保持空闲状态的最小连接数量,低于这个数量将创建新的连接,如果设置为0则不创建 -->  
+        <!-- <property name="minIdle" value="10"/> --> 
+   
+
+
+        <property name="driverClassName" value="${driverClassName}"/>
+		<property name="url" value="${url}"/>
+		<property name="username" value="${username}"/>
+		<property name="password" value="${password}"/>
+		<!-- 连接池启动时创建的初始化连接数量   --> 
+        <property name="initialSize" value="${initialSize}"/>   
+        <!-- 连接池在同一时间能够分配的最大活动连接的数量, 如果设置为非正数则表示不限制   --> 
+        <property name="maxActive" value="${maxActive}"/>
+        <!-- 最大空闲值.连接池中容许保持空闲状态的最大连接数量,超过的空闲连接将被释放,如果设置为负数表示不限制   --> 
+        <property name="maxIdle" value="${maxIdle}"/>   
+        <!-- 最小空闲值.连接池中容许保持空闲状态的最小连接数量,低于这个数量将创建新的连接,如果设置为0则不创建   -->
+        <property name="minIdle" value="${minIdle}"/> 
+	</bean>
+	
+    <bean id="jdbcTemplate"  class="org.springframework.jdbc.core.JdbcTemplate">
+       <property name="dataSource">
+         <ref bean="dataSource"/>
+       </property>
+    </bean>
+    
+	<!-- 配置事务管理bean -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+
+
+    <!-- 可采用@Transactional(propagation=Propagation.NOT_SUPPORTED)注解方式开启事务 -->
+	<!-- <tx:annotation-driven transaction-manager="transactionManager"/>  -->
+
+
+	<!-- 配置事务属性 -->
+	<tx:advice id="jdbcAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- propagation表示的是事务的传播特性，使用required时，是当检测到add开头的方法时，就看此
+				时有没有开启的事务，如果有则将方法放进事务中去，如果没有，则新建一个事务。然后将方法放进去。 -->
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="del*" propagation="REQUIRED" />
+			<tx:method name="check*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="*" propagation="REQUIRED" />
+			<!--如果检测到其它的方法，则给其只读数据库的属性。即当本方法在读时，其它的方
+				法不能再去写了。保证一个事务的完整性。  -->
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="get*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+  <!-- 事务拦截器 -->
+	<aop:config proxy-target-class="true">
+	    <!-- 定义一个切面 -->
+		<aop:pointcut id="all" expression="execution(* com.orifound.aiim.bll.service.*.*(..))" />
+	    <!--  调用上面配置的事务属性，可以将它给本aop pointcut。-->
+		<aop:advisor advice-ref="jdbcAdvice" pointcut-ref="all" />
+	  <!-- 如果还有其它的定义，则可以再加上pointcut、advisor来定义本切面点的事务逻辑。-->
+	</aop:config>
+
+    <!-- 该 BeanPostProcessor 将自动起作用，对标注 @Autowired 的 Bean 进行自动注入 -->
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+    
+    <aop:aspectj-autoproxy /> 
+</beans>

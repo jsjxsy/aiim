@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>singApplet.html</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+<script type="text/javascript"> 
+	document.write( "Java支持："+navigator.javaEnabled()); 
+</script> 
+
+<script type="text/javascript">
+	function testApplet() {
+		var fileSign = document.getElementById('signApplet');
+		var returnValue = fileSign.appletTest();
+		alert('returnValue='+returnValue);
+	}
+
+	function signFile() {
+		//签名文件
+		var originalfile = "D:\\jks\\dag1.txt";
+		//密钥库键
+		var keyAlias = "档案馆";
+		//签名生成文件
+		var signedDataFile = "D:\jks\\dag2.sgn";
+		var fileSign = document.getElementById('signApplet');
+		var handleResult = fileSign.signFile(originalfile, keyAlias, signedDataFile);
+	 	alert('handleResult='+handleResult);
+	}
+</script>
+</head>
+  <body>
+    Applet文件签名测试<br>
+    <input type="button" onclick="signFile()" value="签名测试">
+    <input type="button" onclick="testApplet()" value="签名Jar测试">
+ <!--"CONVERTED_APPLET"-->
+<!-- HTML CONVERTER -->
+<object id="signApplet"
+    classid = "clsid:8AD9C840-044E-11D1-B3E9-00805F499D93"
+    codebase = "jinstall-6u10-windows-i586.cab#Version=6,0,0,32"
+    WIDTH = "0" HEIGHT = "0" >
+    <PARAM NAME = CODE VALUE = "com.orifound.aiim.util.FileSignerApplet" >
+    <PARAM NAME = ARCHIVE VALUE = "appletSign.jar" >
+    <param name = "type" value = "application/x-java-applet;version=1.6">
+    <param name = "scriptable" value = "false">
+
+    <comment>
+	<embed
+            type = "application/x-java-applet;version=1.6" \
+            CODE = "com.orifound.aiim.util.FileSignerApplet" \
+            ARCHIVE = "appletSign.jar" \
+            WIDTH = "0" \
+            HEIGHT = "0"
+	    scriptable = false
+	    pluginspage = "http://java.sun.com/products/plugin/index.html#download">
+	    <noembed>
+            
+            </noembed>
+	</embed>
+    </comment>
+</object>
+<!--
+<APPLET CODE = "com.orifound.aiim.util.FileSignerApplet" ARCHIVE = "appletSign.jar" WIDTH = "100" HEIGHT = "100">
+</APPLET>
+-->
+<!--"END_CONVERTED_APPLET"-->
+</body>

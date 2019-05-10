@@ -1,0 +1,808 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">	
+
+   <!-- 系统初始化Servlet -->
+	<bean id="initialServlet" class="com.orifound.aiim.web.util.SystemInitializeServlet">
+	   <property name="systemInitializeService" ref="systemInitializeService"/>
+	</bean>
+
+   <!-- Spring AOP 拦截器 -->
+    
+    
+    <bean id="dwrSystemLogInterceptor" class="com.orifound.aiim.web.interceptors.DwrSystemLogInterceptor"/> 
+    <bean id="dwrAuthInterceptor" class="com.orifound.aiim.web.interceptors.DwrAuthInterceptor"/>  
+    
+    <!-- DWR -->
+    <bean id="archivesInfoManageDWR" class="com.orifound.aiim.web.struts.ArchivesInfoManageDWR"/>
+
+   <!-- 配置action-->
+          <!-- 原文管理Action -->
+	<bean id="attachedFileManageAction" class="com.orifound.aiim.web.struts.AttachedFileManageAction" scope="prototype"/>
+	
+          <!-- 用户Action -->
+	<bean id="userLoginAction" class="com.orifound.aiim.web.struts.UserLoginAction" scope="prototype"/>
+	
+           <!-- 分类查询Action -->
+   <bean id="integratedQueryAction" class="com.orifound.aiim.web.struts.IntegratedQueryAction" scope="prototype"/>
+   
+            <!-- 档案利用Action -->
+    <bean id="archivesUseAction" class="com.orifound.aiim.web.struts.ArchivesUseAction" scope="prototype"/>
+    
+            <!-- 移交接收管理Action -->
+    <bean id="YJJSAction" class="com.orifound.aiim.web.struts.YJJSAction" scope="prototype"/>
+    
+            <!-- 系统消息Action -->
+    <bean id="systemMessageAction" class="com.orifound.aiim.web.struts.SystemMessageAction" scope="prototype">
+    	<property name="systemMessageService" ref="systemMessageService"/>
+    	<property name="messageTypeManageService" ref="messageTypeManageService"/>
+    </bean>
+
+            <!-- 动态生成验证码图片 -->
+    <bean id="getAuthcode" class="com.orifound.aiim.web.struts.GetAuthcode" scope="prototype"/>
+    
+    <!-- 库房管理Action -->
+    <bean id="storeroomManageAction" class="com.orifound.aiim.web.struts.StoreroomManageAction" scope="prototype" />  
+   
+   <!-- 转出管理DWR -->   
+    <bean id="storeroomManageDWR" class="com.orifound.aiim.web.struts.StoreroomManageDWR" scope="prototype"/>
+    
+   <!-- 学生档案管理action -->
+    <bean id="studentFileManageAction" class="com.orifound.aiim.web.struts.StudentFileManageAction" scope="prototype"/>
+  
+   <!-- 学生档案管理DWR -->
+    <bean id="studentFileManageDWR" class="com.orifound.aiim.web.struts.StudentFileManageDWR"/> 
+   
+   <!-- 教职工档案管理Action -->
+   <bean id="teacherFileManageAction" class="com.orifound.aiim.web.struts.TeacherFileManageAction" scope="prototype"/>
+   
+	<!-- 配置service 配置service 配置service 配置service 配置service 配置service 配置service 配置service 配置service -->
+	
+   
+   <!-- AAAAAAAAAAAAAAAAAAAAAAAAAA -->
+   
+    <!-- 原文利用申请通过信息管理服务实现类 -->
+   <bean id="attachedFileUseRequestPassInfoManageService" class="com.orifound.aiim.bll.service.impl.AttachedFileUseRequestPassInfoManageServiceImpl">
+       <property name="attachedFileUseRequestPassInfoDao" ref="attachedFileUseRequestPassInfoDao"/>
+   </bean>
+   
+    <!-- 档案原文电子文件访问控制服务实现类  -->
+   <bean id="attachedFileAccessControlService" class="com.orifound.aiim.bll.service.impl.AttachedFileAccessControlServiceImpl">
+       <property name="attachedFileUseRequestPassInfoDao" ref="attachedFileUseRequestPassInfoDao"/>
+   </bean>
+   
+   <!-- 在线档案利用申请单业务实现类  -->
+   <bean id="archivesUseRequestManageService" class="com.orifound.aiim.bll.service.impl.ArchivesUseRequestManageServiceImpl">
+       <property name="archivesUseRequestDao" ref="archivesUseRequestDao"/>
+   </bean>
+   
+   <!-- 档案利用申请单明细业务实现类  -->
+   <bean id="archivesUseRequestDetailManageService" class="com.orifound.aiim.bll.service.impl.ArchivesUseRequestDetailManageServiceImpl">
+       <property name="archivesUseRequestDetailDao" ref="archivesUseRequestDetailDao"/>
+   </bean>
+
+
+	<!-- 档案利用管理业务逻辑类 -->
+<!--	<bean id="archivesUseManageService" class="com.orifound.aiim.bll.service.impl.ArchivesUseManageServiceImpl"/>-->
+		<!-- <property name="" -->
+
+	 <!-- 档案利用目的业务逻辑类  -->
+   <bean id="archivesUsePurposeManageService" class="com.orifound.aiim.bll.service.impl.ArchivesUsePurposeManageServiceImpl">
+       <property name="archivesUsePurposeDao" ref="archivesUsePurposeDao"/>
+   </bean>
+   
+   <!-- 档案利用方式业务逻辑类 -->
+   <bean id="archivesUseWayManageService" class="com.orifound.aiim.bll.service.impl.ArchivesUseWayManageServiceImpl">
+       <property name="archivesUseWayDao" ref="archivesUseWayDao"/>
+   </bean>
+   
+   <!-- 档案利用人区域业务逻辑类 -->
+   <bean id="areaManageService" class="com.orifound.aiim.bll.service.impl.AreaManageServiceImpl">
+       <property name="areaDao" ref="areaDao"/>
+   </bean>
+   
+   
+   
+   <!-- 综合查询业务逻辑类 -->
+   <bean id="archivesInfoQueryService" class="com.orifound.aiim.bll.service.impl.ArchivesInfoQueryServiceImpl">
+       <property name="archivesInfoSavedDao" ref="archivesInfoSavedDao"/>
+   </bean>
+   
+   <!-- 实物档案利用出去明细的业务逻辑类 -->
+   <bean id="archivesUseOutInfoManageService" class="com.orifound.aiim.bll.service.impl.ArchivesUseOutInfoManageServiceImpl">
+       <property name="archivesUseOutInfoDao" ref="archivesUseOutInfoDao"/>
+   </bean>
+   
+   <!-- 档案利用人信息业务逻辑类  -->
+   <bean id="archivesUsePersonInfoManageService" class="com.orifound.aiim.bll.service.impl.ArchivesUsePersonInfoManageServiceImpl">
+       <property name="archivesUsePersonInfoDao" ref="archivesUsePersonInfoDao"/>
+   </bean>
+   
+   <!-- 用户自定义条件查询信息业务逻辑类 -->
+   <bean id="userDefinedSearchManageService" class="com.orifound.aiim.bll.service.impl.UserDefinedSearchManageServiceImpl">
+       <property name="userDefinedSearchDao" ref="userDefinedSearchDao"/>
+   </bean>
+   
+   <!-- 档案利用管理业务逻辑类 -->
+    <bean id="archivesUseManageService" class="com.orifound.aiim.bll.service.impl.ArchivesUseManageServiceImpl">
+      <property name="archivesUseRegisterDao" ref="archivesUseRegisterDao"/>
+      <property name="archivesUseOutInfoManageService" ref="archivesUseOutInfoManageService"/>
+      <property name="storeroomArchivesInfoManageService" ref="storeroomArchivesInfoManageService"/>
+   </bean>
+   
+   <!-- 原文管理业务逻辑类 -->
+   <bean id="attachedFileManageService" class="com.orifound.aiim.bll.service.impl.AttachedFileManageServiceImpl">
+      <property name="archivesInfoAttachedFileTypeCodeDao" ref="archivesInfoAttachedFileTypeCodeDao"/>
+      <property name="configManageService" ref="configManageService"/>
+      
+   </bean>
+   
+    <!-- 全宗管理业务逻辑类 -->
+  <bean id="archivesFondsManageService" class="com.orifound.aiim.bll.service.impl.ArchivesFondsManageServiceImpl">
+    <property name="archivesFondsDao" ref="archivesFondsDao"/>
+  </bean>
+   
+  <!-- 档案信息管理相关表业务逻辑 -->
+  <bean id="archivesInfoTableManageService" class="com.orifound.aiim.bll.service.impl.ArchivesInfoTableManageServiceImpl">
+    <property name="archivesInfoTableDao" ref="archivesInfoTableDao"/>
+  </bean>
+  
+  <!-- 档案分类信息管理业务逻辑 -->
+  <bean id="archivesTypeManageService" class="com.orifound.aiim.bll.service.impl.ArchivesTypeManageServiceImpl">
+    <property name="archivesTypeDao" ref="archivesTypeDao"/>
+  </bean>
+  
+  <!-- 档案分类数据项管理业务逻辑 -->
+  <bean id="archivesTypeDataItemManageService" class="com.orifound.aiim.bll.service.impl.ArchivesTypeDataItemManageServiceImpl">
+    <property name="archivesTypeDataItemDao" ref="archivesTypeDataItemDao"/>
+  </bean>
+  
+   <!-- 档案密级管理业务逻辑 -->
+  <bean id="archivesSecrecyManageService" class="com.orifound.aiim.bll.service.impl.ArchivesSecrecyManageServiceImpl">
+    <property name="archivesSecrecyDao" ref="archivesSecrecyDao"/>
+  </bean>
+   
+   <!-- 档案工作表档案信息管理业务逻辑 -->
+  <bean id="archivesInfoWorkingManageService" class="com.orifound.aiim.bll.service.impl.ArchivesInfoWorkingManageServiceImpl">
+    <property name="archivesInfoWorkingDao" ref="archivesInfoWorkingDao"/>
+    <property name="currentContentIDManageService" ref="currentContentIDManageService"/>
+    <property name="archivesInfoWorkProcedureManageService" ref="archivesInfoWorkProcedureManageService"/>
+  </bean>
+  
+  <!-- 档案工作表档案信息管理业务逻辑 -->
+  <bean id="archivesInfoWorkProcedureManageService" class="com.orifound.aiim.bll.service.impl.ArchivesInfoWorkProcedureManageServiceImpl">
+    <property name="archivesInfoWorkProcedureDao" ref="archivesInfoWorkProcedureDao"/>
+  </bean>
+  
+  <!-- 档案归档信息表业务逻辑类 -->
+  <bean id="archivesInfoSavedManageService" class="com.orifound.aiim.bll.service.impl.ArchivesInfoSavedManageServiceImpl"/>
+ 
+ 
+   <!-- CCCCCCCCCCCCC -->
+   
+   
+   
+   <!-- 目录打印模板数据项定义管理服务实现类-->
+   <bean id="catalogDataItemManageService" class="com.orifound.aiim.bll.service.impl.CatalogDataItemManageServiceImpl">
+      <property name="catalogDataItemDao" ref="catalogDataItemDao"/>
+   </bean>
+   
+    <!-- 系统配置管理业务逻辑类 -->
+   <bean id="configManageService" class="com.orifound.aiim.bll.service.impl.ConfigManageServiceImpl">
+      <property name="configDao" ref="configDao"/>
+   </bean>
+   
+  <!-- 校验规则管理业务逻辑 -->
+  <bean id="checkRuleManageService" class="com.orifound.aiim.bll.service.impl.CheckRuleManageServiceImpl">
+    <property name="checkRuleDao" ref="checkRuleDao"/>
+  </bean>
+  
+  <!-- 当前案卷信息管理业务逻辑 -->
+  <bean id="currentContentIDManageService" class="com.orifound.aiim.bll.service.impl.CurrentContentIDManageServiceImpl">
+    <property name="currentContentIDDao" ref="currentContentIDDao"/>
+  </bean>
+   
+   
+   <!-- 当前条形码信息业务逻辑 -->
+  <bean id="currentBarcodeManageService" class="com.orifound.aiim.bll.service.impl.CurrentBarcodeManageServiceImpl">
+    <property name="currentBarcodeDao" ref="currentBarcodeDao"/>   
+  </bean>
+  
+  
+  
+  
+   <!-- DDDDDDDDDDDDDDDDD -->
+   
+   <!-- 部门信息管理业务逻辑类 -->
+    <bean id="departmentInfoManageService" class="com.orifound.aiim.bll.service.impl.DepartmentInfoManageServiceImpl">
+       <property name="departmentInfoDao" ref="departmentInfoDao"/>
+   </bean>
+   
+    <!-- 档案分类数据项管理业务逻辑 -->
+  <bean id="dataSourceManageService" class="com.orifound.aiim.bll.service.impl.DataSourceManageServiceImpl">
+    <property name="dataSourceDao" ref="dataSourceDao"/>
+  </bean>
+  
+   <!-- 数据源数据项管理业务逻辑 -->
+  <bean id="dataSourceItemManageService" class="com.orifound.aiim.bll.service.impl.DataSourceItemManageServiceImpl">
+    <property name="dataSourceItemDao" ref="dataSourceItemDao"/>
+  </bean>
+   
+   <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOooo -->
+   
+    <!-- 公文类种管理业务逻辑类 -->
+   <bean id="officialDocTypeManageService" class="com.orifound.aiim.bll.service.impl.OfficialDocTypeManageServiceImpl">
+      <!-- <property name="">
+         <ref/>
+      </property> -->
+      <property name="officialDocTypeDao" ref="officialDocTypeDao" />
+   </bean>
+   
+   <bean id="officialArchivesTypeManageService" class="com.orifound.aiim.bll.service.impl.OfficialArchivesTypeManageServiceImpl">
+      <!-- <property name="">
+         <ref/>
+      </property> -->
+      <property name="officialArchivesTypeDao" ref="officialArchivesTypeDao" />
+   </bean>
+   
+    <bean id="officialArchivesInfoTableManageService" class="com.orifound.aiim.bll.service.impl.OfficialArchivesInfoTableManageServiceImpl">
+      <!-- <property name="">
+         <ref/>
+      </property> -->
+      <property name="officialArchivesInfoTableDao" ref="officialArchivesInfoTableDao" />
+   </bean>
+   
+   <!-- PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP -->
+    <!-- 档案移交业务逻辑类 -->
+   <bean id="paperTransferManageService" class="com.orifound.aiim.bll.service.impl.PaperTransferManageServiceImpl"/> 
+   
+  <!-- RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR -->
+  
+  <!-- 保管期限管理业务逻辑 -->
+  <bean id="retentionPeriodManageService" class="com.orifound.aiim.bll.service.impl.RetentionPeriodManageServiceImpl">
+    <property name="retentionPeriodDao" ref="retentionPeriodDao"/>
+  </bean>
+
+   <!-- 角色档案分类授权管理服务 -->
+   <bean id="roleRightArchivesTypeManageService" class="com.orifound.aiim.bll.service.impl.RoleRightArchivesTypeManageServiceImpl">
+      <property name="roleRightArchivesTypeDao" ref="roleRightArchivesTypeDao" />
+   </bean>
+   
+   <!-- 角色档案密级授权管理服务 -->
+   <bean id="roleRightArchivesSecrecyManageService" class="com.orifound.aiim.bll.service.impl.RoleRightArchivesSecrecyManageServiceImpl">
+       <property name="roleRightArchivesSecrecyDao" ref="roleRightArchivesSecrecyDao" />
+   </bean>
+
+   <!-- 角色系统功能授权 -->
+    <bean id="roleRightSystemFeatureManageService" class="com.orifound.aiim.bll.service.impl.RoleRightSystemFeatureManageServiceImpl">
+        <property name="roleRightSystemFeatureDao" ref="roleRightSystemFeatureDao" />
+    </bean>
+    
+    
+  <!-- SSSSSSSSSSSSSSSSS -->
+  
+  <!-- 库房盘点服务类-->
+   <bean id="stocktakingManageService" class="com.orifound.aiim.bll.service.impl.StocktakingManageServiceImpl">
+       <property name="stocktakingDao" ref="stocktakingDao"/>  
+       <property name="stockReportSystemNotExistDao" ref="stockReportSystemNotExistDao"/> 
+       <property name="stockReportPaperNotExistDao" ref="stockReportPaperNotExistDao"/> 
+       <property name="stockReportAddressNotMatchDao" ref="stockReportAddressNotMatchDao"/> 
+       <property name="stockReportArchivesBoxNotMatchDao" ref="stockReportArchivesBoxNotMatchDao"/> 
+       <property name="stockReportArchivesCountDao" ref="stockReportArchivesCountDao"/>
+                
+   </bean>
+  
+  <!-- 档案上架位置信息管理服务类-->
+   <bean id="stocktakingInfoManageService" class="com.orifound.aiim.bll.service.impl.StocktakingInfoManageServiceImpl">
+       <property name="stocktakingInfoDao" ref="stocktakingInfoDao"/>              
+   </bean>
+  
+   <!-- 档案上架位置信息管理服务类-->
+   <bean id="storeAddressInfoManageService" class="com.orifound.aiim.bll.service.impl.StoreAddressInfoManageServiceImpl">
+       <property name="storeAddressInfoDao" ref="storeAddressInfoDao"/>              
+   </bean>
+  
+   <!-- 系统消息业务逻辑类 -->
+   <bean id="systemMessageService" class="com.orifound.aiim.bll.service.impl.SystemMessageServiceImpl">
+     <property name="systemMessageDao" ref="systemMessageDao"/>
+   </bean>
+   
+    <!-- 系统消息Dao类 -->
+   <bean id="systemMessageDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.SystemMessageDaoImpl">
+     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+   </bean>
+   
+   <!-- 库房管理业务逻辑类 -->
+   <bean id="storeroomManageService" class="com.orifound.aiim.bll.service.impl.StoreroomManageServiceImpl">
+       <property name="storeroomStructureDao" ref="storeroomStructureDao"/>
+       <property name="storeroomArchivesInfoDao" ref="storeroomArchivesInfoDao"/>   
+       <property name="storeAddressInfoDao" ref="storeAddressInfoDao"/>  
+   </bean>
+   
+  
+   
+   <!-- 库房温度湿度信息管理服务  -->
+    <bean id="tempratureHumidityInfoManageService" class="com.orifound.aiim.bll.service.impl.TempratureHumidityInfoManageServiceImpl">
+      <property name="tempratureHumidityInfoDao" ref="tempratureHumidityInfoDao"/>
+   </bean>
+   
+   <!-- 角色信息字典表管理服务类 -->
+   <bean id="userRoleManageService" class="com.orifound.aiim.bll.service.impl.UserRoleManageServiceImpl"/>
+
+   <!-- 系统初始化业务逻辑类 -->
+   <bean id="systemInitializeService" class="com.orifound.aiim.bll.service.impl.SystemInitializeServiceImpl">
+        <property name="archivesFondsManageService" ref="archivesFondsManageService"/>
+        <property name="archivesInfoTableManageService" ref="archivesInfoTableManageService"/>
+        <property name="archivesTypeManageService" ref="archivesTypeManageService"/>
+        <property name="archivesTypeDataItemManageService" ref="archivesTypeDataItemManageService"/>
+        <property name="dataSourceManageService" ref="dataSourceManageService"/>
+        <property name="dataSourceItemManageService" ref="dataSourceItemManageService"/>
+        <property name="checkRuleManageService" ref="checkRuleManageService"/>
+        <property name="retentionPeriodManageService" ref="retentionPeriodManageService"/>
+        <property name="archivesSecrecyManageService" ref="archivesSecrecyManageService"/>
+        <property name="departmentInfoManageService" ref="departmentInfoManageService"/>
+        <property name="officialDocTypeManageService" ref="officialDocTypeManageService"/>
+        <property name="officialArchivesTypeManageService" ref="officialArchivesTypeManageService"/>
+        <property name="officialArchivesInfoTableManageService" ref="officialArchivesInfoTableManageService"/>
+        <property name="officialArchivesTypeSavedMappingManageService" ref="officialArchivesTypeSavedMappingManageService"/>
+        <property name="officialArchivesDataItemSavedMappingManageService" ref="officialArchivesDataItemSavedMappingManageService"/>
+        <property name="evaluateItemManageService" ref="evaluateItemManageService"/>
+        <property name="evaluateLevelManageService" ref="evaluateLevelManageService"/>
+        <property name="dutyManageService" ref="dutyManageService"/>
+        <property name="userRoleManageService" ref="userRoleManageService"/>
+        <property name="catalogDataItemManageService" ref="catalogDataItemManageService"/>
+        
+   </bean>
+   
+   <!-- 系统用户权限初始化服务 -->
+   <bean id="systemUserRightInitializeService" class="com.orifound.aiim.bll.service.impl.SystemUserRightInitializeServiceImpl">
+     <property name="roleRightArchivesSecrecyManageService" ref="roleRightArchivesSecrecyManageService" />
+     <property name="roleRightArchivesTypeManageService" ref="roleRightArchivesTypeManageService" />
+     <property name="roleRightSystemFeatureManageService" ref="roleRightSystemFeatureManageService" />
+     <property name="userRightArchivesSecrecyManageService" ref="userRightArchivesSecrecyManageService" />
+     <property name="userRightArchivesTypeManageService" ref="userRightArchivesTypeManageService" />
+     <property name="userRightSystemFeatureManageService" ref="userRightSystemFeatureManageService" />
+   </bean>
+  
+   <!-- 学生档案管理业务逻辑服务实现类 -->
+  <bean id="studentFileManageService" class="com.orifound.aiim.bll.service.impl.StudentFileManageSeviceImpl"/>
+  
+   <!-- 库房档案信息管理服务 -->
+	<bean id="storeroomArchivesInfoManageService" class="com.orifound.aiim.bll.service.impl.StoreroomArchivesInfoManageServiceImpl">
+	     <property name="storeroomArchivesInfoDao" ref="storeroomArchivesInfoDao"/>
+	</bean>
+  
+    <bean id="systemLogManageService" class="com.orifound.aiim.bll.service.impl.SystemLogManageServiceImpl"/>
+  
+  <!-- TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT -->
+  
+  <!-- 教职工档案管理服务实现类 -->
+  <bean id="teacherFileManagService" class="com.orifound.aiim.bll.service.impl.TeacherFileManagServiceImpl"/>
+  
+   <!-- UUUUUUUUUUUUUUUUUU -->
+   
+   
+    <!-- 划控访问控制管理服务类 -->
+	<bean id="useScopesAccessControlService" class="com.orifound.aiim.bll.service.impl.UseScopesAccessControlServiceImpl">
+	     <property name="appraisalUseScopesDetailDao" ref="appraisalUseScopesDetailDao"/>
+	</bean>
+   
+   <!-- 用户管理业务逻辑类 -->
+	<bean id="userInfoManageService" class="com.orifound.aiim.bll.service.impl.UserInfoManageServiceImpl">
+		<property name="userInfoDao" ref="userInfoDao" />
+		<property name="userChargeUserInfoManageService" ref="userChargeUserInfoManageService"/>
+		<property name="userChargeDepartmentInfoManageService" ref="userChargeDepartmentInfoManageService"/>
+		<property name="systemUserRightInitializeService" ref="systemUserRightInitializeService"/>
+		<property name="userRolesInfoManageService" ref="userRolesInfoManageService"/>
+	</bean>
+	
+	<!-- 用户代工信息服务 -->
+	<bean id="userChargeUserInfoManageService" class="com.orifound.aiim.bll.service.impl.UserChargeUserInfoManageServiceImpl">
+	     <property name="userChargeUserInfoDao" ref="userChargeUserInfoDao"/>
+	</bean>
+  
+   <!-- 业务专员负责部门信息管理服务 -->
+	<bean id="userChargeDepartmentInfoManageService" class="com.orifound.aiim.bll.service.impl.UserChargeDepartmentInfoManageServiceImpl">
+	     <property name="userChargeDepartmentInfoDao" ref="userChargeDepartmentInfoDao"/>
+	</bean>
+	
+	<!-- 用户档案密级授权管理服务 -->
+	<bean id="userRightArchivesSecrecyManageService" class="com.orifound.aiim.bll.service.impl.UserRightArchivesSecrecyManageServiceImpl">
+	     <property name="userRightArchivesSecrecyDao" ref="userRightArchivesSecrecyDao"/>
+	</bean>
+  
+    <!-- 用户档案分类授权管理服务 -->
+	<bean id="userRightArchivesTypeManageService" class="com.orifound.aiim.bll.service.impl.UserRightArchivesTypeManageServiceImpl">
+	     <property name="userRightArchivesTypeDao" ref="userRightArchivesTypeDao"/>
+	</bean>
+	
+	 <!-- 用户系统功能授权管理服务 -->
+	<bean id="userRightSystemFeatureManageService" class="com.orifound.aiim.bll.service.impl.UserRightSystemFeatureManageServiceImpl">
+	     <property name="userRightSystemFeatureDao" ref="userRightSystemFeatureDao"/>
+	</bean>
+	
+	 <!-- 用户所属角色信息管理服务 -->
+	<bean id="userRolesInfoManageService" class="com.orifound.aiim.bll.service.impl.UserRolesInfoManageServiceImpl">
+	     <property name="userRolesInfoDao" ref="userRolesInfoDao"/>
+	</bean>
+	
+	
+   <!-- 配置DAO 配置DAO 配置DAO 配置DAO 配置DAO 配置DAO 配置DAO 配置DAO 配置DAO 配置DAO 配置DAO 配置DAO 配置DAO 配置DAO -->
+   
+   <!-- AAAAAAAAAAAAAAAAAAAA -->
+   
+   <!-- 原文利用申请通过信息表的DAO -->
+	<bean id="attachedFileUseRequestPassInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.AttachedFileUseRequestPassInfoDaoImpl">
+	    <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+   
+   <!-- 划控鉴定的档案明细信息表的DAO -->
+	<bean id="appraisalUseScopesDetailDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.AppraisalUseScopesDetailDaoImpl">
+	    <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+   
+   <!-- 在线档案利用申请单表的DAO -->
+	<bean id="archivesUseRequestDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ArchivesUseRequestDaoImpl">
+	    <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+   
+   <!-- 档案利用申请单明细表的DAO -->
+	<bean id="archivesUseRequestDetailDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ArchivesUseRequestDetailDaoImpl">
+	    <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+   
+    <!-- 档案利用目的字典表的Dao -->
+	<bean id="areaDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.AreaDaoImpl">
+	    <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+   
+   <!-- 档案利用目的字典表的Dao -->
+	<bean id="archivesUsePurposeDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ArchivesUsePurposeDaoImpl">
+	    <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	
+	 <!-- 档案利用方式字典表的Dao -->
+	<bean id="archivesUseWayDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ArchivesUseWayDaoImpl">
+	    <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+
+	<!-- 实物档案利用出去明细Dao -->
+	<bean id="archivesUseOutInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ArchivesUseOutInfoDaoImpl">
+	    <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+		
+	<!-- 档案全宗字典表的DAO -->
+	<bean id="archivesFondsDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ArchivesFondsDaoImpl">
+	    <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 档案利用人信息表的DAO -->
+	<bean id="archivesUsePersonInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ArchivesUsePersonInfoDaoImpl">
+	    <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 档案利用人信息表的DAO -->
+	<bean id="archivesUseRegisterDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ArchivesUseRegisterDaoImpl">
+	    <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	
+		<!-- 档案信息归档表DAO -->
+	<bean id="archivesInfoSavedDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ArchivesInfoSavedDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 档案相关信息表DAO -->
+	<bean id="archivesInfoTableDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ArchivesInfoTableDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 档案密级字典表DAO -->
+	<bean id="archivesSecrecyDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ArchivesSecrecyDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 档案分类典表DAO -->
+	<bean id="archivesTypeDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ArchivesTypeDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+		
+	<!-- 档案分类数据项典表DAO -->
+	<bean id="archivesTypeDataItemDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ArchivesTypeDataItemDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 档案信息工作表DAO -->
+	<bean id="archivesInfoWorkingDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ArchivesInfoWorkingDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 档案过程过程信息的DAO实现类 -->
+	<bean id="archivesInfoWorkProcedureDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ArchivesInfoWorkProcedureDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 档案过程过程信息的DAO实现类 -->
+	<bean id="archivesInfoAttachedFileTypeCodeDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ArchivesInfoAttachedFileTypeCodeDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	
+	<!-- CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCc -->
+	
+	<!-- 目录打印模板数据项定义表的DAO实现类（SQL SERVER平台） -->
+	<bean id="catalogDataItemDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.CatalogDataItemDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 条形码信息表的DAO实现类（SQL Server平台） -->
+	<bean id="currentBarcodeDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.CurrentBarcodeDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 校验规则字段DAO -->
+	<bean id="checkRuleDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.CheckRuleDaoImpl">
+	   <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- Config表的DAO -->
+	<bean id="configDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ConfigDaoImpl">
+	   <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 当前案卷号信息DAO -->
+	<bean id="currentContentIDDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.CurrentContentIDDaoImpl">
+	   <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 当前批次信息表DAO实现类 -->
+	<bean id="currentTransferBatNoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.CurrentTransferBatNoDaoImpl">
+	   <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD -->
+	
+	<!-- 数据项典表DAO -->
+	<bean id="dataItemDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.DataItemDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 数据源字典表DAO -->
+	<bean id="dataSourceDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.DataSourceDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 数据源的数据项典表DAO -->
+	<bean id="dataSourceItemDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.DataSourceItemDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 数据项的字段类型典表DAO -->
+	<bean id="dataTypeDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.DataTypeDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 部门信息表DAO -->
+	<bean id="departmentInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.DepartmentInfoDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+
+    <!-- EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE -->
+    <bean id="EMSTemplateDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.EMSTemplateDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+ 
+ 
+    <!-- IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII -->
+    <!-- Excel导入映射表DAO -->
+    <bean id="importPersonnelArchivesDataitemsMappingDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.ImportPersonnelArchivesDataitemsMappingDaoImpl">
+         <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>  
+
+    <!-- MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM -->
+    
+    <!-- 转出单信息表DAO实现类 -->
+    <bean id="moveOutRegisterDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.MoveOutRegisterDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+   
+	<!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO -->
+	
+	<!-- 公文类种字典表DAO -->
+	<bean id="officialDocTypeDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.OfficialDocTypeDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 公文档案分类信息的DAO-->
+	<bean id="officialArchivesTypeDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.OfficialArchivesTypeDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 公文档案分类信息的DAO-->
+	<bean id="officialArchivesInfoTableDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.OfficialArchivesInfoTableDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP -->
+	
+	<!-- 移交批次信息表的DAO实现类 -->
+	<bean id="paperTransferBatchesDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.PaperTransferBatchesDaoImpl">
+	   <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 档案移交批次明细表DAO实现类 -->
+	<bean id="paperTransferBatchesDetailsDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.PaperTransferBatchesDetailsDaoImpl">
+	   <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 批次信息分类明细表DAO实现类 -->
+	<bean id="paperTransferBatchesArchvTypeDetailsDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.PaperTransferBatchesArchvTypeDetailsDaoImpl">
+	   <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR -->
+	
+	<!-- 角色系统功能授权信息的DAO -->
+	<bean id="roleRightSystemFeatureDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.RoleRightSystemFeatureDaoImpl">
+	   <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 角色档案分类授权信息的DAO -->
+	<bean id="roleRightArchivesTypeDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.RoleRightArchivesTypeDaoImpl">
+	   <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 角色档案分类授权信息的DAO -->
+	<bean id="roleRightArchivesSecrecyDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.RoleRightArchivesSecrecyDaoImpl">
+	   <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 保管期限字典表DAO -->
+	<bean id="retentionPeriodDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.RetentionPeriodDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS -->
+	
+
+	
+	<!-- 库房盘点- 库房盘点档案数量信息表的DAO实现类  -->
+	<bean id="stockReportArchivesCountDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.StockReportArchivesCountDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 库房盘点-档案装盒不匹配信息表的DAO实现类  -->
+	<bean id="stockReportArchivesBoxNotMatchDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.StockReportArchivesBoxNotMatchDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+		
+	<!-- 库房盘点-上架位置不匹配信息表的DAO实现类  -->
+	<bean id="stockReportAddressNotMatchDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.StockReportAddressNotMatchDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 盘点报告-系统中不在架档案信息表的DAO实现类  -->
+	<bean id="stockReportPaperNotExistDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.StockReportPaperNotExistDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+		
+	<!-- 盘点报告-系统中不在架档案信息表的DAO实现类  -->
+	<bean id="stockReportSystemNotExistDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.StockReportSystemNotExistDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 库房盘点Dao实现类 -->
+	<bean id="stocktakingDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.StocktakingDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+		
+	<!-- 库房盘点工作信息表的DAO-->
+	<bean id="stocktakingInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.StocktakingInfoDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+		
+	<!-- 库房档案信息的DAO-->
+	<bean id="storeroomArchivesInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.StoreroomArchivesInfoDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 档案上架位置信息表的DAO实现类 -->
+	<bean id="storeAddressInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.StoreAddressInfoDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 库房结构信息表（DD_StoreroomStructure）的DAO实现类 -->
+	<bean id="storeroomStructureDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.StoreroomStructureDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 学生信息表DAO -->
+	<bean id="studentInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.StudentInfoDaoImpl">
+	    <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 学生档案卷内文件信息表DAO -->
+	<bean id="studentDocsInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.StudentDocsInfoDaoImpl">
+	    <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<bean id="systemLogInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.SystemLogInfoDaoImpl">
+	    <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT -->
+	<bean id="teacherDocsInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.TeacherDocsInfoDaoImpl">
+	    <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<bean id="teacherDocsTypeDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.TeacherDocsTypeDao">
+	    <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+
+	<bean id="teacherInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.TeacherInfoDaoImpl">
+	    <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+
+	
+
+	
+	
+	
+	<!-- 库房温湿度登记信息表的DAO -->
+	<bean id="tempratureHumidityInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.TempratureHumidityInfoDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+
+	<!-- UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU -->
+	
+	<!-- 系统用户DAO -->
+   <bean id="userInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.UserInfoDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+   </bean>
+   
+	<!--  用户所属角色定义的DAO -->
+	<bean id="userRolesInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.UserRolesInfoDaoImpl">
+	   <property name="jdbcTemplate" ref="jdbcTemplate"/>
+
+	</bean>
+	
+	<!-- 用户系统功能权限的DAO -->
+	<bean id="userRightSystemFeatureDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.UserRightSystemFeatureDaoImpl">
+	   <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 用户档案分类授权信息的DAO -->
+	<bean id="userRightArchivesTypeDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.UserRightArchivesTypeDaoImpl">
+	   <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 用户档案密级授权信息DAO -->
+	<bean id="userRightArchivesSecrecyDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.UserRightArchivesSecrecyDaoImpl">
+	   <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 用户代工信息表的DAO -->
+	<bean id="userChargeUserInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.UserChargeUserInfoDaoImpl">
+	   <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 专职人员负责的部门信息表的DAO -->
+	<bean id="userChargeDepartmentInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.UserChargeDepartmentInfoDaoImpl">
+	   <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 自定义条件查询信息的DAO-->
+	<bean id="userDefinedSearchDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.UserDefinedSearchDaoImpl">
+	     <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 角色信息字典表的DAO  -->
+	<bean id="userRoleDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.UserRoleDaoimpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+</beans>

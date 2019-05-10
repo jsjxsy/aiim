@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">	
+
+				<!--公文编辑与归档-->
+<!-- 配置dao-->
+	<bean id="officialArchivesInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.OfficialArchivesInfoDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="officialTemplateDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.OfficialTemplateDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="officialArchivesTypeSavedMappingDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.OfficialArchivesTypeSavedMappingDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="officialArchivesDataItemSavedMappingDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.OfficialArchivesDataItemSavedMappingDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<bean id="officialArchivesInfoAttachedFileDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.OfficialArchivesInfoAttachedFileDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- 配置entity-->
+	
+	<!-- 配置service-->
+	
+	<bean id="officialArchivesInfoManageService" class="com.orifound.aiim.bll.service.impl.OfficialArchivesInfoManageServiceImpl">
+		<property name="officialArchivesInfoDao" ref="officialArchivesInfoDao"/>
+	</bean>
+	
+	<bean id="officialTemplateManageService" class="com.orifound.aiim.bll.service.impl.OfficialTemplateManageServiceImpl">
+		<property name="officialTemplateDao" ref="officialTemplateDao"/>
+	</bean>
+	
+	<bean id="officialArchivesTypeSavedMappingManageService" class="com.orifound.aiim.bll.service.impl.OfficialArchivesTypeSavedMappingManageServiceImpl">
+		<property name="officialArchivesTypeSavedMappingDao" ref="officialArchivesTypeSavedMappingDao"/>
+	</bean>
+
+	<bean id="officialArchivesDataItemSavedMappingManageService" class="com.orifound.aiim.bll.service.impl.OfficialArchivesDataItemSavedMappingManageServiceImpl">
+		<property name="officialArchivesDataItemSavedMappingDao" ref="officialArchivesDataItemSavedMappingDao"/>
+	</bean>
+	
+	<bean id="officialArchivesInfoAttachedFileManageService" class="com.orifound.aiim.bll.service.impl.OfficialArchivesInfoAttachedFileManageServiceImpl">
+		<property name="officialArchivesInfoAttachedFileDao" ref="officialArchivesInfoAttachedFileDao"/>
+	</bean>
+	
+	<!-- 配置action-->
+	<bean id="officialArchivesInfoManageAction" class="com.orifound.aiim.web.struts.OfficialArchivesInfoManageAction" scope="prototype"/>
+	<bean id="officialTemplateAction" class="com.orifound.aiim.web.struts.OfficialTemplateAction" scope="prototype">
+		<property name="configManageService" ref="configManageService"/>
+	</bean>
+	<bean id="officialArchivesAttachedFileManageAction" class="com.orifound.aiim.web.struts.OfficialArchivesAttachedFileManageAction" scope="prototype"/>
+	<bean id="officeDocAction" class="com.orifound.aiim.web.struts.OfficeDocAction" scope="prototype"/>
+	
+	
+	<!--DWR	-->
+	<bean id="officialArchivesInfoManageDWR" class="com.orifound.aiim.web.struts.OfficialArchivesInfoManageDWR" scope="prototype"/>
+</beans>

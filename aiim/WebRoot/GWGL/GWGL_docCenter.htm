@@ -1,0 +1,454 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>文件著录</title>
+<script type="text/javascript" src="JS/popup.js"></script>
+		<script type="text/javascript" src="JS/common.js"></script>
+<script type="text/javascript" >
+
+
+//打开原文管理页面
+function ywgl()
+{	
+	window.showModalDialog('YWGL_view.htm', "", "dialogWidth:590px; dialogHeight:430px;top=0;left=0;status:no; toolbar=no;menubar=no;scroll:0;location:yes; resizable=no;location=n"); 
+	
+}
+
+
+//改变图片背景颜色
+function changeImage(obj,img) {
+	if (obj) {
+		obj.src="images/"+img;
+	}
+}
+
+
+//又击查看著录信息
+function showItem()
+{
+	window.showModalDialog("Item_show.html","newwindow","dialogWidth=700px;dialogHeight:500px;top=0;left=0;status:no; toolbar=no;menubar=no;scroll:0;location:yes; resizable=no;location=n");
+
+}
+
+//简单查询
+function find()
+{
+	document.getElementById('findDiv').style.display=(document.getElementById('findDiv').style.display=='none')? 'block':'none';
+}
+
+//打开新增对话框
+function showAdd()
+{
+	window.showModalDialog("Item.html","newwindow","dialogWidth=700px;dialogHeight:500px;top=0;left=0;status:no; toolbar=no;menubar=no;scroll:0;location:yes; resizable=no;location=n");
+}
+
+//处理单击事件
+var rowId="";   //保存上一次点击行“tr”的ID；
+var rowColor="";   //保存上一次点击行的颜色
+function clickRow1(obj)
+{
+	if(document.getElementById(rowId)==null){//第一次点击处理
+		rowId=obj.id;	//保存被点击行的ID
+		rowColor=obj.style.backgroundColor;//保存被点击行的颜色
+		obj.style.backgroundColor='#a3c9ff';
+	
+	}else{
+		document.getElementById(rowId).style.backgroundColor=rowColor;
+		//'#e0edff';
+		obj.style.backgroundColor='#a3c9ff';
+		rowId = obj.id;
+	}
+	 
+}
+
+
+//打开简易查询页面
+function dlgFind()
+{
+	window.showModalDialog("DlgFind.htm","newwindow","dialogWidth=600px;dialogHeight:350px;top=0;left=0;status:no; toolbar=no;menubar=no;scroll:0;location:yes; resizable=no;location=n");
+
+}
+
+//文件级目录管理和案卷级目录管理的切换
+function changeTypeOfDA(type_DA)
+{
+	if(type_DA=='DA_AJ'){   //如果类型是案卷
+		document.getElementById('DA_WJ').style.display="none";
+		document.getElementById('DA_AJ').style.display="block";
+	}else{
+		document.getElementById('DA_AJ').style.display="none";
+		document.getElementById('DA_WJ').style.display="block";
+	}
+		
+}
+
+
+//改变按扭背景颜色
+function changeBgColor(objImage,bgcolor)
+{
+	//objImage.style.backgroundColor=bgcolor;
+	objImage.style.background=bgcolor;
+}
+</script>
+
+<style type="text/css">
+/*设置标题底色*/
+.bgTitle { background-color:#a3c9ff;height:25px;}
+/*设置表格顶部框底色*/
+.borderTop {	border-top:#104da6 1px solid;	border-left:#104da6 1px solid;	border-right:#104da6 1px solid;}
+body 
+{
+	height:100%;
+	color: #000000; 
+	font-size:12px;
+	margin:0; 
+	background-color:White;
+}
+/*表头*/
+.tableTitle {font-weight:bold; text-align:left; padding:4px 0 0 5px;}
+.text{ font-size:9pt;}
+.tableHead{
+	font-weight:bold; text-align:center; padding:4px 0 0 0px;
+}
+/*
+#showTable tbody tr:hover{
+	background-color:#a3c9ff;
+}
+*/
+/*设置被选行的颜色*/
+.selectRowColor{
+	background-color:#a4caef;
+}
+
+
+
+</style>
+
+
+</head>
+
+<body>
+
+
+<!--文件级管理（默认）-->
+<table id="DA_WJ" cellpadding="0" cellspacing="0" style=" display:block; padding:0; margin:0; width:100%" >
+	<tr>
+		<td>		
+		<table width="100%" style="margin:0px;" cellspacing="0" cellpadding="0">
+			<tr>
+				<td>
+					<input type="image" src="images/NewS.gif"  onclick="showAdd();" onmouseover="changeImage(this,'NewS2.gif')" onmouseout="changeImage(this,'NewS.gif')"  />
+					<input type="image" src="images/DelS.gif" disabled="disabled" />
+					<input type="image" src="images/EditS.gif" disabled="disabled" />
+					<input type="image" src="images/zujuan.gif" onmouseover="changeImage(this,'zujuan2.gif')" onmouseout="changeImage(this,'zujuan.gif')" onclick="showAdd();"  />
+					<input type="image" src="images/FindS.gif" onmouseover="changeImage(this,'FindS2.gif')" onmouseout="changeImage(this,'FindS.gif')" onclick="find()" />					
+					<input type="image" src="images/Shenhe.gif" onmouseover="changeImage(this,'Shenhe2.gif')" onmouseout="changeImage(this,'Shenhe.gif')" onclick="alert('提交成功')"/>
+					<div style="margin-right:2px; display:inline-block; width:280px; float:right; margin-top:5px; color:blue; text-align:right;"><font style="font-size:12px;font-weight:bold;">当前位置：</font>公文管理&nbsp;&gt;&gt;&nbsp;&nbsp;文档中心</div >	
+				</td>
+			</tr>
+			<tr>
+			  <td align="center">
+			    <div id="findDiv" style="display:none; width:100%;margin-top:10px;">
+			       <table class="findTB"  >
+			         <tr style=" height:12px;">
+						<td>
+						</td>
+					</tr>
+					
+					<tr style="height: 26px;" align="left">
+						<td>
+						题名
+						</td>
+						<td>
+							<input type="text" style="width:310px;" />
+						</td>
+					</tr>
+					
+					<tr style="height: 26px" align="left">
+						<td>
+						主题词
+						</td>
+						<td><input type="text" style="width: 310px;"/></td>
+					</tr>
+					
+					<tr style="height: 26px" align="left">
+						<td>
+							责任者
+						</td>
+						<td>
+							<select style="width: 316px">
+								<option></option>
+								<option>组织部</option>
+								<option>党办</option>
+								<option>校办</option>
+							</select>
+						</td>
+					</tr>
+					
+					<tr style="height: 26px" align="left">
+						<td>
+						密级
+						</td>
+						<td>
+							<select style="width: 316px;">
+								<option value="0"></option>
+								<option value="1">开放</option>
+								<option value="2">公开</option>
+								<option value="3">内部</option>
+							</select>						
+						</td>
+					</tr>
+					
+					<tr style="height: 26px"  align="left">
+						<td>
+						保管期限
+						</td>
+						<td align="left">
+							<select style="width: 316px; ">
+								<option value="0">
+								</option>
+								<option value="1">永久
+								</option>
+								<option value="2">长期
+								</option>
+								<option value="3">短期
+								</option>
+							</select>	
+						</td>
+					</tr>					
+	
+	
+					<tr style="height: 26px" align="left">
+						<td>
+						形成日期
+						</td>
+						<td>
+						<input type="text" id="bmgdDate" style="  width: 118px;"/><input  type="image" style="padding-right:10px;" src="images/DropdownTime.gif" onclick="PopUpCalendar('bmgdDate',true)"  />
+						至<input type="text" id="bmgdDate2" style=" margin-left:5px; width: 118px;"/><input  type="image" style="padding-right:10px;" src="images/DropdownTime.gif" onclick="PopUpCalendar('bmgdDate2',true)"  />
+			
+						</td>
+					</tr>
+			         <tr style="height:40px;">
+			         	<td></td>
+			           <td align="left"><input type="submit" value="查询" style="margin-left:125px;"   onclick="javascript:document.getElementById('findDiv').style.display='none'; document.getElementById('showResult').style.display='block';"/><label style="width:100px;">&nbsp;</label></td>
+			          
+			         </tr>
+			       </table>
+			    </div>
+			  </td>
+			</tr>
+			<tr>
+				<td>
+					<table width="100%" cellspacing="0" cellpadding="0" style="margin:0px;">
+						<tr class="bgTitle">
+							<td style="height:25px" class="borderTop">
+								<table style="width:100%;height:25px" cellspacing="0" cellpadding="0">
+							            <tr>
+							                <td>
+							                    <label class="tableTitle">文件级目录—档群(DQ)—综合(DQ11)</label>
+							                </td>
+							                <td align="right"  class="text" >
+							                	<label style="margin-right:4px" id="rsInfo">第1页 共3页 共35条记录</label>
+							                </td>							                	
+							            </tr>
+							    </table>
+							</td>
+						</tr>
+					</table>				
+				</td>			
+			</tr>
+			<tr>
+				<td>
+					<table id="showTable" width="100%" style="margin:0px; border: #104da6 1px solid;" cellspacing="1px" cellpadding="0px" >						
+						<thead class="tableHead">
+							<tr class="bgTitle">
+								<th width="35px">选择</th>								
+								<th style="width:30px;">序号</th>
+								<th>题名</th>								
+								<th>责任者</th>
+								<th>密级</th>
+								<th>保管期限</th>
+								<th>形成日期</th>
+								<th>页数</th>
+								<th align="center" style="width: 35px">原文</th>
+								
+							</tr>
+						</thead>
+						<tbody>
+							<tr  bgcolor="#eef5ff" id="row1" onclick="clickRow1(this)"  ondblclick="showItem()">
+								<td align="center"><input type="checkbox" id="001"/></td>
+								<td>1</td>
+								<td>测试题名1</td>
+								<td>组织部</td>
+								<td>开放</td>
+								<td>长期</td>
+								<td>2010-01-08</td>
+								<td>2</td>
+								<td align="center" style="width: 35px"><a href="javascript:ywgl()">2</a></td>
+							</tr>
+							<tr bgcolor="#e0edff" id="row2" onclick="clickRow1(this)" ondblclick="showItem()">
+								<td align="center"><input type="checkbox"/></td>
+								<td>2</td>
+								<td>测试题名2</td>
+								<td>组织部</td>
+								<td>开放</td>
+								<td>长期</td>
+								<td>2010-01-08</td>
+								<td>2</td>
+								<td align="center" style="width: 35px"><a href="javascript:ywgl()">2</a></td>
+							</tr>
+							<tr bgcolor="#eef5ff" id="row3"   onclick="clickRow1(this)" ondblclick="showItem()">
+								<td align="center"><input type="checkbox"/></td>
+								<td>3</td>
+								<td>测试题名3</td>
+								<td>党办</td>
+								<td>内部</td>
+								<td>长期</td>
+								<td>2010-01-08</td>
+								<td>2</td>
+								<td align="center" style="width: 35px"><a href="javascript:ywgl()">2</a></td>
+							</tr>
+							<tr bgcolor="#e0edff" id="row4" onclick="clickRow1(this)" ondblclick="showItem()">
+								<td align="center"><input type="checkbox"/></td>
+								<td>4</td>
+								<td>测试题名4</td>
+								<td>党办</td>
+								<td>内部</td>
+								<td>长期</td>
+								<td>2010-01-08</td>
+								<td>2</td>
+								<td align="center" style="width: 35px"><a href="#">2</a></td>
+							</tr>
+							<tr bgcolor="#eef5ff" id="row5" onclick="clickRow1(this)" ondblclick="showAdd()">
+								<td align="center"><input type="checkbox"/></td>
+								<td>5</td>
+								<td>测试题名5</td>
+								<td>组织部</td>
+								<td>内部</td>
+								<td>长期</td>
+								<td>2010-01-08</td>
+								<td>2</td>
+								<td align="center" style="width: 35px"><a href="#">2</a></td>
+
+							</tr>
+							<tr bgcolor="#e0edff"  id="row6" onclick="clickRow1(this)" ondblclick="showAdd()">
+								<td align="center"><input type="checkbox"/></td>
+								<td>6</td>
+								<td>测试题名6</td>
+								<td>组织部</td>
+								<td>内部</td>
+								<td>长期</td>
+								<td>2010-01-08</td>
+								<td>2</td>
+								<td align="center" style="width: 35px"><a href="#">2</a></td>
+							</tr>
+							<tr bgcolor="#eef5ff"  id="row7" onclick="clickRow1(this)">
+								<td align="center"><input type="checkbox"/></td>
+								<td>7</td>
+								<td>测试题名7</td>
+								<td>组织部</td>
+								<td>内部</td>
+								<td>长期</td>
+								<td>2010-01-08</td>
+								<td>2</td>
+								<td align="center" style="width: 35px"><a href="#">2</a></td>
+							</tr>
+							<tr bgcolor="#e0edff"  id="row8" onclick="clickRow1(this)">
+								<td align="center"><input type="checkbox"/></td>
+								<td>8</td>
+								<td>测试题名8</td>
+								<td>党办</td>
+								<td>内部</td>
+								<td>长期</td>
+								<td>2010-01-08</td>
+								<td>2</td>
+								<td align="center" style="width: 35px"><a href="#">2</a></td>
+							</tr>
+							<tr bgcolor="#eef5ff"  id="row9" onclick="clickRow1(this)">
+								<td align="center"><input type="checkbox"/></td>
+								<td>9</td>
+								<td>测试题名9</td>
+								<td>党办</td>
+								<td>内部</td>
+								<td>长期</td>
+								<td>2010-01-08</td>
+								<td>2</td>
+								<td align="center" style="width: 35px"><a href="#">2</a></td>
+							</tr>
+							<tr bgcolor="#e0edff"  id="row10" onclick="clickRow1(this)">
+								<td align="center"><input type="checkbox"/></td>
+								<td>10</td>
+								<td>测试题名10</td>
+								<td>党办</td>
+								<td>公开</td>
+								<td>长期</td>
+								<td>2010-01-20</td>
+								<td>2</td>
+								<td align="center" style="width: 35px"><a href="#">5</a></td>
+
+								
+								
+							</tr>
+							<tr bgcolor="#eef5ff"  id="row11" onclick="clickRow1(this)">
+								<td align="center"><input type="checkbox"/></td>
+								<td>11</td>
+								<td>测试题名11</td>
+								<td>校办</td>
+								<td>公开</td>
+								<td>长期</td>
+								<td>2010-01-20</td>
+								<td>2</td>
+								<td align="center" style="width: 35px"><a href="#">5</a></td>
+							</tr>
+							<tr bgcolor="#e0edff"  id="row12" onclick="clickRow1(this)">
+								<td align="center"><input type="checkbox"/></td>
+								<td>12</td>
+								<td>测试题名12</td>
+								<td>校办</td>
+								<td>公开</td>
+								<td>长期</td>
+								<td>2010-01-20</td>
+								<td>2</td>
+								<td align="center" style="width: 35px"><a href="#">5</a></td>
+								
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<table width="100%">
+						 <tr>
+							<td><input type="checkbox" id="SelectAll" accesskey="S"  name="SelectAll"
+								  title="选中/取消 所有记录(S)"  /><label for="SelectAll">全选</label>
+								  
+							</td>
+							<td align="right">
+								<input type="image" src="images/FirstS1.gif" />	
+								<input type="image" src="images/PreviousS1.gif" />
+								<input type="image" src="images/NextS.gif" />
+								<input type="image" src="images/LastS.gif" />
+								转到第<input type="text" style="width:15px; height:15px" id="goPage"/>页
+								<input type="image" src="images/GoS.gif"/>
+									                                           
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		
+			
+		</table>
+		
+		</td>
+	</tr>
+</table>
+
+
+</body>
+
+</html>

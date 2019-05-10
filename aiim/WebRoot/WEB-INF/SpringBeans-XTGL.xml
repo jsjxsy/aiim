@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">	
+						<!--	  系统管理                  -->
+	<!--		一下配置在spring-beans中已有				-->
+	<!-- 系统用户DAO 
+   <bean id="userInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.UserInfoDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+   </bean>
+   
+	 用户所属角色定义的DAO 
+	<bean id="userRolesInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.UserRolesInfoDaoImpl">
+	   <property name="jdbcTemplate" ref="jdbcTemplate"/>
+
+	</bean>
+	
+	用户代工信息表的DAO 
+	<bean id="userChargeUserInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.UserChargeUserInfoDaoImpl">
+	   <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	 专职人员负责的部门信息表的DAO
+	<bean id="userChargeDepartmentInfoDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.UserChargeDepartmentInfoDaoImpl">
+	   <property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	 角色信息字典表的DAO  
+	<bean id="userRoleDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.UserRoleDaoimpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	-->
+	<!--	Service -->
+	<!-- 用户管理业务逻辑类 
+	<bean id="userInfoManageService" class="com.orifound.aiim.bll.service.impl.UserInfoManageServiceImpl">
+		<property name="userInfoDao" ref="userInfoDao" />
+		<property name="userChargeUserInfoManageService" ref="userChargeUserInfoManageService"/>
+		<property name="userChargeDepartmentInfoManageService" ref="userChargeDepartmentInfoManageService"/>
+		<property name="systemUserRightInitializeService" ref="systemUserRightInitializeService"/>
+		<property name="userRolesInfoManageService" ref="userRolesInfoManageService"/>
+	</bean>
+	
+	 用户代工信息服务
+	<bean id="userChargeUserInfoManageService" class="com.orifound.aiim.bll.service.impl.UserChargeUserInfoManageServiceImpl">
+	     <property name="userChargeUserInfoDao" ref="userChargeUserInfoDao"/>
+	</bean>
+  
+   	 业务专员负责部门信息管理服务 
+	<bean id="userChargeDepartmentInfoManageService" class="com.orifound.aiim.bll.service.impl.UserChargeDepartmentInfoManageServiceImpl">
+	     <property name="userChargeDepartmentInfoDao" ref="userChargeDepartmentInfoDao"/>
+	</bean>
+	 用户所属角色信息管理服务
+	<bean id="userRolesInfoManageService" class="com.orifound.aiim.bll.service.impl.UserRolesInfoManageServiceImpl">
+	     <property name="userRolesInfoDao" ref="userRolesInfoDao"/>
+	</bean>
+	-->
+	<!-- 配置action-->
+	<bean id="UserInfoManageAction" class="com.orifound.aiim.web.struts.UserInfoManageAction" scope="prototype">
+		<property name="userInfoManageService" ref="userInfoManageService"/>
+		<property name="departmentInfoManageService" ref="departmentInfoManageService"/>
+		<property name="dutyManageService" ref="dutyManageService"/>
+		<property name="userRolesInfoManageService" ref="userRolesInfoManageService"/>
+	</bean>
+	
+	<bean id="userRoleManageAction" class="com.orifound.aiim.web.struts.UserRoleManageAction" scope="prototype">
+		<property name="userRoleManageService" ref="userRoleManageService"/>
+		<property name="userRolesInfoManageService" ref="userRolesInfoManageService"/>
+	</bean>
+	
+	<bean id="userRolesInfoManageAction" class="com.orifound.aiim.web.struts.UserRolesInfoManageAction" scope="prototype">
+		<property name="userRolesInfoManageService" ref="userRolesInfoManageService"/>
+		<property name="userRoleManageService" ref="userRoleManageService"/>
+	</bean>
+	
+	<!-- 部门管理 -->
+	<bean id="DepartmentManageAction" class="com.orifound.aiim.web.struts.DepartmentManageAction" />			
+	<bean id="userChargeUserManageAction" class="com.orifound.aiim.web.struts.UserChargeUserManageAction" >	
+		<property name="userChargeUserInfoManageService" ref="userChargeUserInfoManageService"/>		
+		<property name="userInfoManageService" ref="userInfoManageService"/>
+	</bean>
+	
+	<bean id="userChargeDepartmentManageAction" class="com.orifound.aiim.web.struts.UserChargeDepartmentManageAction" >	
+		<property name="userChargeDepartmentInfoManageService" ref="userChargeDepartmentInfoManageService"/>		
+	</bean>
+	
+		<!--DWR	-->
+	<bean id="userRolesInfoManageDWR" class="com.orifound.aiim.web.struts.UserRolesInfoManageDWR" scope="prototype"/>
+	<bean id="userChargeUserInfoManageDWR" class="com.orifound.aiim.web.struts.UserChargeUserInfoManageDWR" scope="prototype"/>
+	<bean id="userChargeDepartmentManageDWR" class="com.orifound.aiim.web.struts.UserChargeDepartmentManageDWR" scope="prototype">
+	<property name="userChargeDepartmentInfoManageService" ref="userChargeDepartmentInfoManageService"/>
+	</bean>
+	<bean id="userRoleManageDWR" class="com.orifound.aiim.web.struts.UserRoleManageDWR" scope="prototype">
+		<property name="userRoleManageService" ref="userRoleManageService"/>
+	</bean>	
+	
+	<bean id="userInfoManageDWR" class="com.orifound.aiim.web.struts.UserInfoManageDWR" scope="prototype"/>
+</beans>

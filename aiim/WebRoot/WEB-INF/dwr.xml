@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC 
+"-//GetAhead Limited//DTD Direct Web Remoting 3.0//EN" 
+"http://getahead.org/dwr/dwr30.dtd">
+<dwr>
+	<allow>
+		<filter class="org.directwebremoting.filter.AuditLogAjaxFilter" />
+		<!-- 档案管理子DWR控制类======================== -->
+		<create creator="spring" javascript="ArchivesInfoManageDWR">
+			<param name="beanName" value="archivesInfoManageDWR" />
+		</create>
+		
+		<!-- 库房档案状态枚举类 -->
+		 <convert converter="enum" match="com.orifound.aiim.entity.EnumStoreStatus">           
+		</convert>
+		
+		<!-- 档案利用人信息实体类  -->
+		 <convert converter="bean" match="com.orifound.aiim.entity.ArchivesUsePersonInfo">           
+		</convert>
+		<!--  -->
+		
+		
+		<!-- 档案利用出去明细信息 -->
+		 <convert converter="bean" match="com.orifound.aiim.entity.ArchivesUseOutInfo">           
+		</convert>
+		
+		<!-- 实物档案利用登记实体类  -->
+		 <convert converter="bean" match="com.orifound.aiim.entity.ArchivesUseRegister">           
+		</convert>
+		
+		<!-- 档案信息实体类 -->
+		 <convert converter="bean" match="com.orifound.aiim.entity.ArchivesInfo">
+            <param name="include" value="NBXH,workFlowStatus,contentID,subContentID,parentFlag,parentNBXH,archivesFondsID,archivesTypeID,archivesID,title,subContentCount,pageSum,retentionPeriodID,secrecyID,formationYear,saveDate,barcode,deleteFlag,rowFieldsValues" />
+		</convert>
+		
+		<!-- 字段值定义类 -->
+		<convert converter="bean" match="com.orifound.aiim.entity.FieldValue">
+		</convert>
+		<!-- 用户信息 -->
+		<convert converter="bean" match="com.orifound.aiim.entity.UserInfo">            
+		</convert>
+
+		<create creator="spring" javascript="officialArchivesAttachedFileManageAction">
+			<param name="beanName" value="officialArchivesAttachedFileManageAction" />	
+		</create>
+		
+		<!-- 原文电子文件实体类 -->
+		<convert converter="bean" match="com.orifound.aiim.entity.ArchivesInfoAttachedFile">
+            <param name="include" value="ID,NBXH,title,oriFileName,originalSize,originalType,attachedTime,fetchFullTextRequest" />
+		</convert>
+
+		
+		<convert converter="bean" match="com.orifound.aiim.entity.OfficialArchivesInfoAttachedFile">
+            <param name="include" value="ID,NBXH,title,oriFileName,originalSize,originalType,attachedTime,fetchFullTextRequest" />
+		</convert>
+		<!--	用户信息	-->
+		<convert converter="bean" match="com.orifound.aiim.entity.UserInfo">
+		</convert>
+		<!--	对象	-->
+		<convert converter="bean" match="com.orifound.aiim.entity.DataPageInfo">
+		</convert>
+		<!-- 全文实体类 -->
+		<convert converter="bean" match="com.orifound.aiim.entity.ArchivesInfoAttachedFileFullText">
+            <param name="include" value="attachedFileID,fullText,remark" />
+		</convert>
+		<!--	整数扩展对象类	-->
+		<convert converter="bean" match="com.orifound.aiim.entity.IntegerEx">
+		</convert>
+		<!-- 档案分类实体类-->
+		<convert converter="bean" match="com.orifound.aiim.entity.ArchivesType">
+            <param name="include" value="iD,topFlag,name,code,parentID,topTypeID,fullCode,fullName,endFlag,contentIDFormatLength,subContentIDFormatLength,archivesIDExpression,attachedFileSavePath,renewPeriod,remark" />
+		</convert>
+		
+		<!-- 库房管理DWR控制类======================== -->		
+		 <!-- 库房管理  -->
+		 <create creator="spring" javascript="StoreroomManageAction">
+			<param name="beanName" value="storeroomManageAction" />
+		</create>
+	 	<!-- 库房管理2  -->
+		<create creator="spring" javascript="StoreroomManageDWR">
+			<param name="beanName" value="storeroomManageDWR" />
+		</create>
+		
+		 <!-- 库房档案信息实体  -->
+		 <convert converter="bean" match="com.orifound.aiim.entity.StoreroomArchivesInfo">           
+		</convert>		
+		
+		 <!-- 库房结构实体  -->
+		<convert converter="bean" match="com.orifound.aiim.entity.StoreroomStructure">            
+		</convert>
+		
+		<!-- 档案利用DWR控制类======================== -->		
+		<create creator="spring" javascript="ArchivesUseAction">
+			<param name="beanName" value="archivesUseAction" />
+			<!-- 
+			通过条形码归还档案
+			<include method="returnArchives"/>
+			通过姓名查询利用人信息
+			<include method="findArchivesUsePersonInfoByName"/>
+			通过条形码获取档案信息
+			<include method="findArchivesByBarcode"/>
+			添加利用人信息
+			<include method="addArchivesUsePersonInfo"/>
+			续借档案  
+			<include method="renewArchives" />
+			申请审批
+			<include method="checkArchivesUseRequestDetail" />
+			
+			-->
+			
+		</create>
+		
+		<!-- DWR异常处理控制类========================== -->
+		<convert match="java.lang.Throwable" converter="exception"></convert>
+		<convert match="java.lang.StackTraceElement" converter="bean"></convert>
+		
+		<!-- 移交接收  DWR控制类========================== -->
+		<create creator="spring" javascript="YJJSAction">
+			<param name="beanName" value="YJJSAction" />
+		</create>
+		
+		
+		<!--绩效管理子系统DWR控制类======================== -->
+		
+		<create creator="spring" javascript="PerformanceManageDWR">
+			<param name="beanName" value="performanceManageDWR" />
+			<include method="findbusinessGuids"/>
+			<include method="appendEvaluate"/>
+			<include method="insertEvaluateByYear"/>
+			<include method="findCountByYear"/>
+			<include method="deleteBatchEvaluate"/>
+			<include method="findTaskPersons"/>
+			<include method="deleteBatchTaskInfo"/>
+			<include method="findTaskPersonByTaskInfoId"/>
+			<include method="saveTaskResponse"/>
+			<include method="findMaxYear"/>
+			<include method="isAppendEvaluate"/>
+		</create>
+
+		
+		<convert converter="bean" match="com.orifound.aiim.entity.TaskPerson">
+            <param name="include" value="taskID,userID,userName" />
+		</convert>
+		
+		<!--绩效管理子系统DWR控制类======================== -->
+		
+		
+		
+		<!-- 鉴定管理子系统DWR控制类======================== -->
+		<create creator="spring" javascript="ArchiveAppraisalDWR">
+			<param name="beanName" value="archiveAppraisalDWR" />
+			<include method="findAppraisalUseScopesDetailByByNBXH"/>
+			<include method="controlAreaRegister"/>
+			<include method="findRoleNamesByControlArea"/>
+			<include method="cancelPublicOpenRegister"/>
+		</create>
+		
+		<convert converter="bean" match="com.orifound.aiim.entity.AppraisalUseScopesDetail" >
+			<param name="include" value="appraisalReason,appraisalDate,appraisalPersion,roleIds" />
+		</convert>
+		
+		<!-- 鉴定管理子系统DWR控制类======================== -->
+		
+		
+		<!-- 档案出证管理DWR控制类======================== -->
+		<create creator="spring" javascript="ArchivesCertificateManageDWR">
+			<param name="beanName" value="archivesCertificateManageDWR" />
+			<include method="findArchivesUsePersonInfoByQuery"/>
+			<include method="findElectivesCourse"/>
+			<include method="saveElectivesCourse"/>
+			<include method="getUploadPath"/>
+			
+		</create>
+		<convert converter="bean" match="com.orifound.aiim.entity.Course">
+			<param name="include" value="courseNameCN,courseNameEN,electivesFlag,remark,shortKey" />
+		</convert>
+		<!-- 档案出证管理DWR控制类======================== -->
+		
+		
+		<!-- 综合查询DWR显式调用方法 -->
+		<create creator="spring" javascript="IntegratedQueryAction">
+		   <param name="beanName" value="integratedQueryAction"/>
+		   <include method="getFindHtmlCodeBuyArchivesTypeIds"/>
+		   <include method="validateAdvanceQueryInput"/>
+		   <include method="validateQueryInputStr"/>
+		   <include method="deleteDefinedQueryByID"/>
+		   <include method="findChildArchivesInfosByNBXH"/>
+		   
+		</create>
+		
+
+		<create creator="spring" javascript="UserRolesInfoManageDWR">
+			<param name="beanName" value="userRolesInfoManageDWR" />
+			<include method="addUserRolesInfoByRoleID"/>
+			<include method="addUserRolesInfoByUserID"/>
+			<include method="delUserRoles"/>
+		</create>
+		
+		<create creator="spring" javascript="UserChargeUserInfoManageDWR">
+			<param name="beanName" value="userChargeUserInfoManageDWR" />
+			<include method="saveUserChargeUserInfo"/>
+		</create>
+		
+		<create creator="spring" javascript="UserChargeDepartmentManageDWR">
+			<param name="beanName" value="userChargeDepartmentManageDWR" />
+			<include method="saveUserChargeDepartment"/>
+		</create>
+		
+		<!-- 角色档案资源管理	-->
+		<create creator="spring" javascript="UserRolesArchivesTypeManageDWR">
+			<param name="beanName" value="userRolesArchivesTypeManageDWR" />
+		</create>
+		
+		<!--用户档案资源权限	-->
+		<create creator="spring" javascript="UserRightArchivesTypeManageDWR">
+			<param name="beanName" value="userRightArchivesTypeManageDWR" />
+		</create>
+		
+		<!--用户系统功能资源权限	-->
+		<create creator="spring" javascript="UserRightSystemFeatureManageDWR">
+			<param name="beanName" value="userRightSystemFeatureManageDWR" />
+		</create>
+		
+		<!--角色系统功能资源权限	-->
+		<create creator="spring" javascript="UserRolesSystemFeatureManageDWR">
+			<param name="beanName" value="userRolesSystemFeatureManageDWR" />
+		</create>
+		
+		<!--	用户信息管理	-->
+		<create creator="spring" javascript="UserInfoManageDWR">
+			<param name="beanName" value="userInfoManageDWR" />
+			<include method="saveUserInfo"/>
+			<include method="updateUserInfo"/>
+			<include method="findAllUserInfo"/>
+			<include method="modifyPassword"/>
+			<include method="checkUserName"/>
+			<include method="checkIDCardNo"/>
+		</create>
+		
+		<create creator="spring" javascript="UserRoleManageDWR">
+			<param name="beanName" value="userRoleManageDWR" />
+		</create>
+		<!--用户档案密级权限	-->
+		<create creator="spring" javascript="UserRightArchivesSecrecyManageDWR">
+			<param name="beanName" value="userRightArchivesSecrecyManageDWR" />
+		</create>
+		
+		<!--角色档案密级权限	-->
+		<create creator="spring" javascript="UserRolesArchivesSecrecyManageDWR">
+			<param name="beanName" value="userRolesArchivesSecrecyManageDWR" />
+		</create>
+		
+		<!-- 公文档案管理DWR控制类======================== -->
+		<create creator="spring" javascript="OfficialArchivesInfoManageDWR">
+			<param name="beanName" value="officialArchivesInfoManageDWR" />
+		</create>
+		
+		<!-- 原文管理DWR控制类========================== -->
+		<create creator="spring" javascript="attachedFileManageAction">
+			<param name="beanName" value="attachedFileManageAction" />	
+		</create>
+		
+		<!-- 学生信息管理 -->
+		<create creator="spring" javascript="studentFileManageDWR">
+		   <param name="beanName" value="studentFileManageDWR"/>
+		</create>
+		<!-- EMS快递单实体类 -->
+		<convert match="com.orifound.aiim.entity.EMS" converter="bean">
+		    <param name="include" value="acceptanceOffice,fromPersonName,fromPersonPhone,fromCompanyName,fromCompanyAddr,fromPostCode,contents,contentTol,remailPersonName,receivePersonName,receivePersonPhone,receiveCompanyName,receiveCompanyAddr,receiveCityName,receivePostCode"/>
+		</convert>
+		
+		<!-- 教职工信息管理 -->
+		<create creator="spring" javascript="teacherFileManageAction">
+		   <param name="beanName" value="teacherFileManageAction"/>
+		   <include method="findChildByNbxhDWR"/>
+		</create>
+		<!-- 教职工信息 -->
+		<convert match="com.orifound.aiim.entity.TeacherDocsInfo" converter="bean">
+		    <param name="include" value="ID,NBXH,docTypeID,orderID,docName,formationDate,copys,pages,remark"/>
+		</convert>
+	</allow>
+	<signatures> 
+		<![CDATA[ 	
+		import java.util.Map; 
+		]]> 
+	</signatures>
+</dwr>
+<!-- ,archivesFondsID,archivesTypeID,title,secrecyID,retentionPeriodID,subContentID,pageSum,formationYear -->

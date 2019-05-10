@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">	
+
+					<!-- 统合统计结果页面展示-->
+	<!-- 配置dao-->
+	<bean id="messageTypeDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.MessageTypeDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<!-- 配置entity-->
+	
+	<!-- 配置service-->
+	<bean id="messageTypeManageService" class="com.orifound.aiim.bll.service.impl.MessageTypeManageServiceImpl">
+		<property name="messageTypeDao" ref="messageTypeDao"/>
+	</bean>
+	<!-- 配置action-->
+</beans>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">	
+			<!--	 权限管理                   -->
+	<!-- 配置dao-->
+	<bean id="systemFeatureDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.SystemFeatureDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<!--	角色相关的系统权限管理	-->
+	<bean id="userRolesSystemFeatureDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.UserRolesSystemFeatureDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="userRolesArchivesTypeDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.UserRolesArchivesTypeDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="userRolesArchivesSecrecyDao" class="com.orifound.aiim.dal.dao.sqlserver.impl.UserRolesArchivesSecrecyDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<!--	用户相关的权限已经在spring-beans.xml文件中配置-->
+	<!-- 
+	 用户档案密级授权管理服务 
+	<bean id="userRightArchivesSecrecyManageService" class="com.orifound.aiim.bll.service.impl.UserRightArchivesSecrecyManageServiceImpl">
+	     <property name="userRightArchivesSecrecyDao" ref="userRightArchivesSecrecyDao"/>
+	</bean>
+  
+     用户档案分类授权管理服务
+	<bean id="userRightArchivesTypeManageService" class="com.orifound.aiim.bll.service.impl.UserRightArchivesTypeManageServiceImpl">
+	     <property name="userRightArchivesTypeDao" ref="userRightArchivesTypeDao"/>
+	</bean>
+	
+	  用户系统功能授权管理服务
+	<bean id="userRightSystemFeatureManageService" class="com.orifound.aiim.bll.service.impl.UserRightSystemFeatureManageServiceImpl">
+	     <property name="userRightSystemFeatureDao" ref="userRightSystemFeatureDao"/>
+	</bean>
+	
+	 用户所属角色信息管理服务 
+	<bean id="userRolesInfoManageService" class="com.orifound.aiim.bll.service.impl.UserRolesInfoManageServiceImpl">
+	     <property name="userRolesInfoDao" ref="userRolesInfoDao"/>
+	</bean>	
+	 -->
+	 
+	 
+	<!-- 配置entity-->
+	
+	<!-- 配置service-->
+	<bean id="systemFeatureManageService" class="com.orifound.aiim.bll.service.impl.SystemFeatureManageServiceImpl">
+		<property name="systemFeatureDao" ref="systemFeatureDao"/>
+	</bean>
+	
+	<bean id="userRolesSystemFeatureManageService" class="com.orifound.aiim.bll.service.impl.UserRolesSystemFeatureManageServiceImpl">
+		<property name="userRolesSystemFeatureDao" ref="userRolesSystemFeatureDao"/>
+	</bean>
+	
+	<bean id="userRolesArchivesTypeManageService" class="com.orifound.aiim.bll.service.impl.UserRolesArchivesTypeManageServiceImpl">
+		<property name="userRolesArchivesTypeDao" ref="userRolesArchivesTypeDao"/>
+	</bean>
+	
+	<bean id="userRolesArchivesSecrecyManageService" class="com.orifound.aiim.bll.service.impl.UserRolesArchivesSecrecyManageServiceImpl">
+		<property name="userRolesArchivesSecrecyDao" ref="userRolesArchivesSecrecyDao"/>
+	</bean>
+	
+	<!-- 配置action-->
+	<bean id="userRightArchivesTypeManageAction" class="com.orifound.aiim.web.struts.UserRightArchivesTypeManageAction">
+		<property name="userRightArchivesTypeManageService" ref="userRightArchivesTypeManageService"/>
+	</bean>
+	
+	<bean id="userRightSystemFeatureManageAction" class="com.orifound.aiim.web.struts.UserRightSystemFeatureManageAction">
+		<property name="userRightSystemFeatureManageService" ref="userRightSystemFeatureManageService"/>
+		<property name="systemFeatureManageService" ref="systemFeatureManageService"/>
+		<property name="userRightArchivesSecrecyManageService" ref="userRightArchivesSecrecyManageService"/>
+	</bean>
+	
+	<bean id="userRolesSystemFeatureManageAction" class="com.orifound.aiim.web.struts.UserRolesSystemFeatureManageAction">
+		<property name="userRolesSystemFeatureManageService" ref="userRolesSystemFeatureManageService"/>
+		<property name="systemFeatureManageService" ref="systemFeatureManageService"/>
+		<property name="userRolesArchivesSecrecyManageService" ref="userRolesArchivesSecrecyManageService" />
+	</bean>
+	
+	<bean id="userRolesArchivesTypeManageAction" class="com.orifound.aiim.web.struts.UserRolesArchivesTypeManageAction">
+		<property name="userRolesArchivesTypeManageService" ref="userRolesArchivesTypeManageService"/>
+	</bean>
+	
+	<!--DWR	-->
+	
+	<bean id="userRightArchivesTypeManageDWR" class="com.orifound.aiim.web.struts.UserRightArchivesTypeManageDWR" scope="prototype">
+		<property name="userRightArchivesTypeManageService" ref="userRightArchivesTypeManageService"/>
+	</bean>
+	
+	 <bean id="userRightArchivesSecrecyManageDWR" class="com.orifound.aiim.web.struts.UserRightArchivesSecrecyManageDWR" scope="prototype">
+		<property name="userRightArchivesSecrecyManageService" ref="userRightArchivesSecrecyManageService"/>
+	</bean>
+	
+	<bean id="userRightSystemFeatureManageDWR" class="com.orifound.aiim.web.struts.UserRightSystemFeatureManageDWR" scope="prototype">
+		<property name="userRightSystemFeatureManageService" ref="userRightSystemFeatureManageService"/>
+	</bean>
+	
+	<bean id="userRolesArchivesSecrecyManageDWR" class="com.orifound.aiim.web.struts.UserRolesArchivesSecrecyManageDWR" scope="prototype">
+		<property name="userRolesArchivesSecrecyManageService" ref="userRolesArchivesSecrecyManageService"/>
+	</bean>
+	
+	 <bean id="userRolesArchivesTypeManageDWR" class="com.orifound.aiim.web.struts.UserRolesArchivesTypeManageDWR" scope="prototype">
+		<property name="userRolesArchivesTypeManageService" ref="userRolesArchivesTypeManageService"/>
+	</bean>
+	
+	 <bean id="userRolesSystemFeatureManageDWR" class="com.orifound.aiim.web.struts.UserRolesSystemFeatureManageDWR" scope="prototype">
+		<property name="userRolesArchivesTypeManageService" ref="userRolesArchivesTypeManageService"/>
+	</bean>
+	
+</beans>

@@ -1,0 +1,235 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>发文登记</title>
+<script type="text/javascript" >
+//打开日期输入页面
+function PopUpCalendar(ctrlobj,type)
+{
+	var url;
+	var obj=document.getElementById(ctrlobj);
+	if (obj==null) {
+		return;
+	}
+	var obj1=obj;
+	showx=obj1.offsetLeft+window.screenLeft;
+	showy=obj1.offsetTop+window.screenTop+20;
+	while (obj1=obj1.offsetParent) {
+		showx+=obj1.offsetLeft;
+		showy+=obj1.offsetTop;
+	}
+	if (type==true) {
+		url="JS/CalendarWithFormat.html";
+	}
+	else {
+		url="JS/CalendarWithOutFormat.html"
+	}
+	var retval = window.showModalDialog(url, "", "dialogWidth:197px; dialogHeight:210px; dialogLeft:"+showx+"px; dialogTop:"+showy+"px; status:no; directories:yes;scrollbars:no;Resizable=no;help=no; "  );
+	if( retval != null ){
+		obj.value = retval;
+		
+	}
+}
+
+
+//打开原文管理页面
+function ywgl()
+{	
+	var retval =window.showModalDialog('YWGL.htm', "", "dialogWidth:590px; dialogHeight:430px;top=0;left=0;status:no; toolbar=no;menubar=no;scroll:0;location:yes; resizable=no;location=n"  ); 
+}
+
+</script>
+<style type="text/css">
+#inputs input,select,textarea{
+	background-color:;
+}
+</style>
+
+</head>
+
+<body style="margin:0px; background-color:#f9f9f9;">
+
+
+	<table width="100%" style="height:100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td style="background-image:url(images/bghead.gif);height:50px;" >&nbsp;				
+				<input type="image"ID="imgFirst" src="images/imagefirst.gif" />
+				<input type="image" src="images/imageprevious.gif"  />
+				<input type="image" ID="imgNext" src="images/imagenext.gif" />
+				<input type="image" ID="imgLast" src="images/imagelast.gif"  />
+				<img src="images/Separator.gif" alt="" />
+				<input type="image" ID="imgAdd" src="images/add.gif" />
+				<input type="image" ID="imgDel" src="images/delete.gif"  />
+				<input type="image" ID="imgEdit" src="images/edit.gif"  Width="36px" />					
+				<img src="images/Separator.gif" alt="" />
+				<input type="image" ID="imgSave" src="images/save3.gif" />
+				<input type="image" ID="imgSAdd" src="images/saveadd3.gif"  />
+				<input type="image" ID="imgCancel" src="images/imagecancel3.gif"/>
+				<img src="images/Separator.gif" alt="" />&nbsp;
+				<input type="image" ID="imgExit" src="images/exitout.gif"  onclick="window.close();" />
+			</td>
+		</tr>
+	</table>
+	<br/>		
+	<table id="inputs" width="100%" style="height:100%;  margin-left:50px;  font-size:15px;" cellpadding="0" cellspacing="0" >
+		<tr>
+			<td width="60px">
+				文号
+			</td>
+			<td>
+				<input type="text" style="width: 177px"  style="margin-right:10px;" value="200302121" readonly="readonly"/> 
+				发文类型<select style="width: 211px; margin-right:10px;  margin-left:5px;">
+					<option></option>
+					<option selected="selected">公告</option>
+					<option>决定</option>
+					<option>决议</option>
+				</select>
+
+			</td>
+		</tr>
+		<tr style="height:5px;"></tr>
+
+		<tr >
+			<td style="height: 26px">
+			题名
+			</td>
+			<td style="height: 26px">
+				<input type="text" style="width: 457px" value="测试公文1" readonly="readonly" />
+			</td>
+		</tr>
+		
+		<tr style="height:5px;"></tr>
+		
+		<tr >
+			<td>
+			主题词
+			</td>
+			<td><input type="text" style="width: 457px; " value="测试主题词1，测试主题词2" readonly="readonly"/></td>
+		</tr>
+		
+		<tr style="height:5px;"></tr>
+				
+		<tr>
+			<td>
+			责任者
+			</td>
+			<td>
+				<select style="width: 131px; margin-right:10px;">
+					<option></option>
+					<option selected="selected">组织部</option>
+					<option>党办</option>
+					<option>校办</option>
+				</select>
+				密级<select style="width: 93px; margin-right:10px; margin-left:5px;">
+					<option value="0">	</option>
+					<option value="1" selected="selected">开放</option>
+					<option value="2">公开</option>
+					<option value="3">内部</option>					
+				</select>
+				保管期限<select style="width: 111px; margin-right:10px; margin-left:5px;">
+					<option value="0">
+					</option>
+					<option value="1" selected="selected">永久
+					</option>
+					<option value="2">长期
+					</option>
+					<option value="3">短期
+					</option>
+
+				</select>			
+			</td>
+		</tr>
+		
+		<tr style="height:5px;"></tr>
+		
+		<tr >
+			<td>
+				份数
+			</td>
+			<td>
+				<input type="text" style="width: 177px; margin-right:10px;" value="5" />发文日期<input type="text" id="xcDate" style="margin-left:5px; width: 182px;" value="2010-04-06"/><input  type="image" style="margin-right:20px;" src="images/DropdownTime.gif" onclick="PopUpCalendar('xcDate',true)"  />
+			</td>
+		</tr>
+		
+		<tr style="height:5px;"></tr>
+		
+		<tr >
+			<td>
+				附件
+			</td>
+			<td>
+				<input type="file" style="width: 464px"   value="D:\Program Files\Mozilla Firefox\install.log"/>
+				
+			</td>
+		</tr>
+		
+		<tr style="height:5px;"></tr>		
+		
+		<tr >
+			<td>
+				签发人
+			</td>
+			<td>
+				<input type="text" style="width: 177px; margin-right:10px;" value="陈玉" />主办单位<input type="text" id="xcDate" style="margin-left:5px; width: 199px;" value="教务处"/>
+			</td>
+		</tr>
+		
+		<tr style="height:5px;"></tr>
+		
+		<tr >
+			<td>
+				会签人
+			</td>
+			<td>
+				<input type="text" style="width: 177px; margin-right:10px;"  value="王石" />会签单位<input type="text" id="xcDate" style="margin-left:5px; width: 199px;"  value="行政处"/>
+			</td>
+		</tr>
+		<tr style="height:5px;"></tr>
+		<tr >
+			<td>
+				主送单位
+			</td>
+			<td>
+				<input type="text" style="width: 457px;" value="学生处" />
+			</td>
+		</tr>
+		
+		<tr style="height:5px;"></tr>
+		
+		<tr>
+			<td>
+				抄送单位
+			</td>
+			<td>
+				<input type="text" id="xcDate" style=" width: 457px;" value="学习部；组织部；宣传部；"/>
+			</td>
+		</tr>
+
+
+		
+		<tr style="height:5px;"></tr>
+		
+		<tr >
+			<td>
+				备注
+			</td>
+			<td>
+				<textarea rows="3" style="width: 457px"></textarea>
+			</td>
+		</tr>
+		
+		<tr style="height:5px;"></tr>
+		
+		<tr >
+			<td>
+				著录人
+			</td>
+			<td>
+				<input type="text" style="width: 180px; margin-right:20px;" value="张三" readonly="readonly" />
+			</td>
+		</tr>		
+	</table>	
+</body>
+</html>

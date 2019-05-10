@@ -1,0 +1,330 @@
+/**
+ * 
+ */
+package com.orifound.aiim.dal.dao.sqlserver.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
+
+import javax.sql.DataSource;
+
+import org.springframework.jdbc.BadSqlGrammarException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
+
+import com.orifound.aiim.dal.dao.IArchivesCertificateInfoDao;
+import com.orifound.aiim.entity.ArchivesCertificateInfo;
+import com.orifound.aiim.entity.CertificateType;
+import com.orifound.aiim.entity.ErrInfo;
+
+/**
+ * 档案出证信息表的DAO实现类（SQL Server 平台）
+ *
+ */
+public class ArchivesCertificateInfoDaoImpl extends JdbcDaoSupport implements IArchivesCertificateInfoDao {
+	
+	/**
+	 * 查询结果集到实体类的映射器，该类可用于DAO实现类中
+	 * 
+	 */
+	private class ArchivesCertificateInfoMapper implements RowMapper<ArchivesCertificateInfo>
+	{
+		
+		@Override
+		public ArchivesCertificateInfo mapRow(ResultSet rs, int rowNum) throws SQLException
+		{
+			int iD = rs.getInt("ID");
+			int certificateRegID = rs.getInt("CertificateRegID");
+			String name = rs.getString("Name");
+			int certificateTypeID = rs.getInt("CertificateTypeID");
+			int total = rs.getInt("Total");
+			boolean expressFlag = rs.getBoolean("ExpressFlag");
+			String certificateSN = rs.getString("CertificateSN");
+			String xH = rs.getString("XH");
+			boolean dealedFlag = rs.getBoolean("DealedFlag");
+			Date fileUploadDate = rs.getTimestamp("FileUploadDate");
+			String certificateFileName = rs.getString("CertificateFileName");
+			
+			return new ArchivesCertificateInfo(iD,certificateRegID,name,certificateTypeID,total,expressFlag,certificateSN,xH,dealedFlag,fileUploadDate,certificateFileName);
+		}
+	}
+
+	private class CertificateTypeMapper implements RowMapper<CertificateType>
+	{
+		
+		@Override
+		public CertificateType mapRow(ResultSet rs, int rowNum) throws SQLException
+		{
+			int iD = rs.getInt("ID");
+			String name = rs.getString("Name");
+			String remark = rs.getString("Remark");
+			
+			return new CertificateType(iD,name,remark);
+		}
+	}
+	
+	/**
+	 * 构造函数
+	 */
+	public ArchivesCertificateInfoDaoImpl() {
+
+	}
+
+	/**
+	 * 带数据源的构造函数
+	 * @param dataSource 数据源
+	 */
+	public ArchivesCertificateInfoDaoImpl(DataSource dataSource) {
+		setDataSource(dataSource);
+	}
+	
+	/**
+	 * 检查JDBC数据源的依赖注入（JDBC DataSource Depandency Injection）
+	 * @param pErrInfo 处理失败的错误原因描述
+	 * @return 处理成功返回true，否则返回false
+	 */
+	private boolean CheckDataSourceInjection(ErrInfo pErrInfo) {
+		boolean pFlag = true;
+		int pErrPos = 0;
+		Throwable throwable = new Throwable();
+
+		try {
+			//检查数据源是否为空
+			pErrPos = 1;
+			if (getDataSource() == null) {
+				pFlag = false;
+				pErrInfo.getContent().append("JDBC数据源非法为空，请检查是否有进行依赖注入或赋值。");
+			}
+		} catch (Exception e) {
+			//异常错误
+			pFlag = false;
+			pErrInfo.getContent().append(e.toString());
+			pErrInfo.setException(e);
+		} finally {
+			//拼接详细的错误描述信息，包括类名/方法名/错误位置
+			if (pFlag == false && pErrInfo.getContent().length() > 0) {
+				StackTraceElement[] stackTraceElements = throwable
+						.getStackTrace();
+				StringBuilder tempBuilder = new StringBuilder(
+						stackTraceElements[0].getClassName());
+				tempBuilder.append(".");
+				tempBuilder.append(stackTraceElements[0].getMethodName());
+				tempBuilder.append("-->");
+
+				//如果属于异常错误，则需要在错误信息中加入错误位置标记信息
+				if (pErrInfo.getException() != null) {
+					tempBuilder.append(" ErrPos: ");
+					tempBuilder.append(pErrPos);
+					tempBuilder.append(", ");
+				}
+
+				pErrInfo.getContent().insert(0, tempBuilder.toString());
+				tempBuilder = null;
+			}
+
+			//销毁局部变量
+			throwable = null;
+		}
+
+		return pFlag;
+	}
+	
+	/**
+	 * 查询档案出证分类信息的SQL语句
+	 */
+	private final String SQL_SELECT_CertificateTypes = "SELECT * FROM DD_CertificateType ORDER BY ID ASC";
+	
+	/**
+	 * 根据出证登记编号查询档案出证明细信息的SQL语句
+	 */
+	private final String SQL_SELECT_By_CertificateRegID  = "SELECT A.*, B.Name FROM ArchivesCertificateInfo A,DD_CertificateType B WHERE A.CertificateTypeID = B.ID AND A.CertificateRegID = ? ORDER BY A.ID";
+	/* (non-Javadoc)
+	 * @see com.orifound.aiim.dal.dao.IArchivesCertificateInfoDao#delete(com.orifound.aiim.entity.ArchivesCertificateInfo, com.orifound.aiim.entity.ErrInfo)
+	 */
+	@Override
+	public boolean delete(ArchivesCertificateInfo archivesCertificateInfo,
+			ErrInfo pErrInfo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.orifound.aiim.dal.dao.IArchivesCertificateInfoDao#findAll(java.util.List, com.orifound.aiim.entity.ErrInfo)
+	 */
+	@Override
+	public boolean findAll(
+			List<ArchivesCertificateInfo> archivesCertificateInfos,
+			ErrInfo pErrInfo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.orifound.aiim.dal.dao.IArchivesCertificateInfoDao#findByID(int, com.orifound.aiim.entity.ArchivesCertificateInfo, com.orifound.aiim.entity.ErrInfo)
+	 */
+	@Override
+	public boolean findByID(int pID,
+			ArchivesCertificateInfo archivesCertificateInfo, ErrInfo pErrInfo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.orifound.aiim.dal.dao.IArchivesCertificateInfoDao#save(com.orifound.aiim.entity.ArchivesCertificateInfo, com.orifound.aiim.entity.ErrInfo)
+	 */
+	@Override
+	public boolean save(ArchivesCertificateInfo archivesCertificateInfo,
+			ErrInfo pErrInfo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.orifound.aiim.dal.dao.IArchivesCertificateInfoDao#update(com.orifound.aiim.entity.ArchivesCertificateInfo, com.orifound.aiim.entity.ErrInfo)
+	 */
+	@Override
+	public boolean update(ArchivesCertificateInfo archivesCertificateInfo,
+			ErrInfo pErrInfo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean findCertificateTypes(List<CertificateType> certificateTypes, ErrInfo pErrInfo) {
+		boolean pFlag = true;
+		int pErrPos = 0;
+		Throwable throwable = new Throwable();
+
+		try {
+			//检查JDBC数据源是否正确依赖注入
+			if (CheckDataSourceInjection(pErrInfo) == false) {
+				pFlag = false;
+			}
+
+			//执行SQL语句
+			if (pFlag) {
+				pErrPos = 2;
+				JdbcTemplate jdbcTemplate = getJdbcTemplate();
+				List<CertificateType> pEntitys=jdbcTemplate.query(SQL_SELECT_CertificateTypes,new CertificateTypeMapper());
+
+				//返回查询结果
+				if (pEntitys.size() > 0) {
+					certificateTypes.addAll(pEntitys);
+				}
+
+				//销毁局部变量
+				jdbcTemplate = null;
+			}
+		} catch (BadSqlGrammarException e) {
+			//SQL语句语法错误
+			pFlag = false;
+			pErrInfo.getContent().append(e.toString());
+			pErrInfo.setException(e);
+			pErrInfo.setBadSQL(e.getSql());
+		} catch (Exception e) {
+			//其他异常错误
+			pFlag = false;
+			pErrInfo.getContent().append(e.toString());
+			pErrInfo.setException(e);
+		} finally {
+
+			//拼接详细的错误描述信息，包括类名/方法名/错误位置
+			if (pFlag == false && pErrInfo.getContent().length() > 0) {
+				StackTraceElement[] stackTraceElements = throwable
+						.getStackTrace();
+				StringBuilder tempBuilder = new StringBuilder(
+						stackTraceElements[0].getClassName());
+				tempBuilder.append(".");
+				tempBuilder.append(stackTraceElements[0].getMethodName());
+				tempBuilder.append("-->");
+
+				//如果属于异常错误，则需要在错误信息中加入错误位置标记信息
+				if (pErrInfo.getException() != null) {
+					tempBuilder.append(" ErrPos: ");
+					tempBuilder.append(pErrPos);
+					tempBuilder.append(", ");
+				}
+
+				pErrInfo.getContent().insert(0, tempBuilder.toString());
+				tempBuilder = null;
+			}
+
+			//销毁局部变量
+			throwable = null;
+		}
+
+		return pFlag;
+	}
+	
+	@Override
+	public boolean findByCertificateRegID(int pCertificateRegID,ArchivesCertificateInfo archivesCertificateInfo, ErrInfo pErrInfo) {
+		boolean pFlag = true;
+		int pErrPos = 0;
+		Throwable throwable = new Throwable();
+
+		try {
+			//检查JDBC数据源是否正确依赖注入
+			if (CheckDataSourceInjection(pErrInfo) == false) {
+				pFlag = false;
+			}
+
+			//执行SQL语句
+			if (pFlag) {
+				pErrPos = 2;
+				JdbcTemplate jdbcTemplate = getJdbcTemplate();
+				List<ArchivesCertificateInfo> pEntitys=jdbcTemplate.query(SQL_SELECT_By_CertificateRegID,new ArchivesCertificateInfoMapper(),pCertificateRegID);
+
+				//返回查询结果
+				if (pEntitys.size() > 0) {
+					archivesCertificateInfo.cloneFrom(pEntitys.get(0));
+				}
+
+				//销毁局部变量
+				jdbcTemplate = null;
+			}
+		} catch (BadSqlGrammarException e) {
+			//SQL语句语法错误
+			pFlag = false;
+			pErrInfo.getContent().append(e.toString());
+			pErrInfo.setException(e);
+			pErrInfo.setBadSQL(e.getSql());
+		} catch (Exception e) {
+			//其他异常错误
+			pFlag = false;
+			pErrInfo.getContent().append(e.toString());
+			pErrInfo.setException(e);
+		} finally {
+
+			//拼接详细的错误描述信息，包括类名/方法名/错误位置
+			if (pFlag == false && pErrInfo.getContent().length() > 0) {
+				StackTraceElement[] stackTraceElements = throwable
+						.getStackTrace();
+				StringBuilder tempBuilder = new StringBuilder(
+						stackTraceElements[0].getClassName());
+				tempBuilder.append(".");
+				tempBuilder.append(stackTraceElements[0].getMethodName());
+				tempBuilder.append("-->");
+
+				//如果属于异常错误，则需要在错误信息中加入错误位置标记信息
+				if (pErrInfo.getException() != null) {
+					tempBuilder.append(" ErrPos: ");
+					tempBuilder.append(pErrPos);
+					tempBuilder.append(", ");
+				}
+
+				pErrInfo.getContent().insert(0, tempBuilder.toString());
+				tempBuilder = null;
+			}
+
+			//销毁局部变量
+			throwable = null;
+		}
+
+		return pFlag;
+	}
+
+
+}

@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>公文归档</title>
+<script type="text/javascript" >
+//打开日期输入页面
+function PopUpCalendar(ctrlobj,type)
+{
+	var url;
+	var obj=document.getElementById(ctrlobj);
+	if (obj==null) {
+		return;
+	}
+	var obj1=obj;
+	showx=obj1.offsetLeft+window.screenLeft;
+	showy=obj1.offsetTop+window.screenTop+20;
+	while (obj1=obj1.offsetParent) {
+		showx+=obj1.offsetLeft;
+		showy+=obj1.offsetTop;
+	}
+	if (type==true) {
+		url="JS/CalendarWithFormat.html";
+	}
+	else {
+		url="JS/CalendarWithOutFormat.html"
+	}
+	var retval = window.showModalDialog(url, "", "dialogWidth:197px; dialogHeight:210px; dialogLeft:"+showx+"px; dialogTop:"+showy+"px; status:no; directories:yes;scrollbars:no;Resizable=no;help=no; "  );
+	if( retval != null ){
+		obj.value = retval;
+		
+	}
+}
+
+
+//打开原文管理页面
+function ywgl()
+{	
+	var retval =window.showModalDialog('YWGL.htm', "", "dialogWidth:590px; dialogHeight:430px;top=0;left=0;status:no; toolbar=no;menubar=no;scroll:0;location:yes; resizable=no;location=n"  ); 
+}
+
+</script>
+<style type="text/css">
+#inputs input,select,textarea{
+	background-color:;
+}
+</style>
+
+</head>
+
+<body style="margin:0px; background-color:#f9f9f9;">
+
+	
+	<table id="inputs" width="100%" style="height:100%;  margin-left:20px;  font-size:15px;" cellpadding="0" cellspacing="0" >
+		<tr>
+			<td >&nbsp;
+				
+			</td>
+			<td>
+				
+			</td>
+		</tr>
+		
+		
+		<tr>
+			<td  style="width:50px;" >
+			档案门类
+			</td>
+			<td style="width:150px;" align="left">
+				<select style="width: 125px;">				
+					<option>党群</option>
+					<option>行政</option>
+					<option>教学工作</option>
+					<option>科学研究</option>
+				</select>				
+			</td>
+			
+		</tr>
+		<tr style="height:5px;">
+			<td></td>
+		</tr>
+		<tr>
+			<td>二级类目
+			</td>
+			<td>
+			<select style="width: 125px; ">					
+					<option value="1">党务综合</option>
+					<option value="2">纪检</option>
+					<option value="3">组织</option>
+					<option value="3">宣传教育</option>
+					<option value="3">统战</option>	
+					<option value="3">工会</option>
+					<option value="3">团委</option>						
+				</select>				
+			</td>
+			
+		</tr>
+		<tr>
+			<td></td>
+			<td>
+					<input type="button" value="确定"  style="margin-left:70px; margin-top:8px;" onclick="window.close()"/><input  type="button" value="取消" onclick="window.close()"/>
+			</td>
+		</tr>
+		
+				
+		
+		
+
+		
+		
+		
+		
+		
+		
+	</table>	
+</body>
+</html>

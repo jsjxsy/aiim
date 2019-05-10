@@ -1,0 +1,147 @@
+body 
+{
+	height:100%;
+	color: #000000; 
+	margin:0; 
+	background-color:White;
+}
+/*设置表格顶部框底色*/
+.tabletop 
+{
+	border-top:#104da6 1px solid;  
+	background-color:#a3c9ff; 
+	height:25px;	
+	border-left:#104da6 1px solid;	
+	border-right:#104da6 1px solid;
+	font-size: 12px;
+}
+/*标题*/
+.tableTitle 
+{
+	font-weight:bold; 
+	text-align:left; 
+	padding:4px 0 0 5px;
+}
+.text{ font-size:12px; text-align: right;}
+/*表头*/
+.tableHead
+{
+	font-weight:bold; 
+	text-align:center; 
+	padding:4px 0 0 0px;
+	background-color:#a3c9ff;
+	height:25px;
+}
+/*设置表身*/
+#showTable{
+    margin:0px; 
+    border: #104da6 1px solid; 
+    width: 100%;
+    font-size: 12px;
+}
+/*设置鼠标经过颜色*/
+/* #showTable tbody tr:hover{
+	background-color:#a3c9ff;
+}*/
+
+/*设置被选行的颜色*/
+.selectRowColor{
+	background-color:#a4caef;
+}
+/*设置button的样式*/
+.button {
+	border: #005fd3 solid 1px;
+	background-color: #b0d0ff;
+	vertical-align: middle;
+	font-size: 9pt;
+}
+
+/*设置用图片做链接的样式*/
+a image{
+    border: 0px;
+}
+
+.bg_color {background-color:White;}
+
+
+.bg_title 
+{ 
+ background-color:#a3c9ff; 
+ height:23px; 
+ color:#00337d; 
+ border-bottom:#104da6 1px solid; 
+ text-align: center;
+}
+
+
+.back_border 
+{
+ background-color:#eeeeee; 
+ border:#cbcbcb solid 1px; 
+ font-size: 12px;
+}
+
+/* 提交  */
+.submitButton
+{
+  background-image: url(../images/search.gif); 
+  width: 53px; 
+  height: 21px; 
+  border: 0px; 
+  cursor:hand; 
+}
+
+/* 保存  */
+.saveButton
+{
+  background-image: url(../images/save.gif); 
+  width: 53px; 
+  height: 21px; 
+  border: 0px; 
+  cursor:hand; 
+}
+/* 隐藏按钮  */
+.hideButton
+{
+  background-image: url(../images/hide.gif);
+  width: 53px; 
+  height: 21px; 
+  border: 0px; 
+  cursor:hand; 
+}
+
+/* 取消按钮  */
+.cancelButton
+{
+  background-image: url(../images/cancel.gif);
+  width: 53px; 
+  height: 21px; 
+  border: 0px; 
+  cursor:hand; 
+}
+/*
+ A:link	{	
+	text-decoration:	none;
+	color:	black;
+	}	
+		
+A:visited	{	
+	text-decoration:	none;
+	color:	black;
+	}	
+		
+A:active	{	
+	text-decoration:	none;
+	color:	black;
+	}	
+		
+A:hover	{	
+	text-decoration:	underline;
+	color:	red;
+	}
+*/
+/* 图片  */
+IMG {
+	padding: 0px;
+	margin: 0px;
+}
